@@ -1,0 +1,425 @@
+{
+  "should_decode": true,
+  "name": "Ronin Gateway Contract V2",
+  "abi": [
+    {
+      "name": "bulkSubmitWithdrawalSignatures",
+      "type": "function",
+      "inputs": [
+        {
+          "name": "param_0",
+          "type": "uint256[]"
+        },
+        {
+          "name": "param_1",
+          "type": "bytes[]"
+        }
+      ],
+      "outputs": [],
+      "_dlt_meta": {
+        "selector": "0xfa389659",
+        "block": 16406354
+      }
+    },
+    {
+      "name": "requestWithdrawalFor",
+      "type": "function",
+      "inputs": [
+        {
+          "components": [
+            {
+              "name": "param_0_0",
+              "type": "address"
+            },
+            {
+              "name": "param_0_1",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_0_2_0",
+                  "type": "uint8"
+                },
+                {
+                  "name": "param_0_2_1",
+                  "type": "uint256"
+                },
+                {
+                  "name": "param_0_2_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_0_2",
+              "type": "tuple"
+            }
+          ],
+          "name": "param_0",
+          "type": "tuple"
+        },
+        {
+          "name": "param_1",
+          "type": "uint256"
+        }
+      ],
+      "outputs": [],
+      "_dlt_meta": {
+        "selector": "0x0b1ff17f",
+        "block": 16406389
+      }
+    },
+    {
+      "name": "WithdrawalRequested",
+      "type": "event",
+      "inputs": [
+        {
+          "name": "param_0",
+          "type": "bytes32",
+          "indexed": false
+        },
+        {
+          "components": [
+            {
+              "name": "param_1_0",
+              "type": "uint256"
+            },
+            {
+              "name": "param_1_1",
+              "type": "uint8"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_2_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_2",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_3_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_3",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_4_0",
+                  "type": "uint8"
+                },
+                {
+                  "name": "param_1_4_1",
+                  "type": "uint256"
+                },
+                {
+                  "name": "param_1_4_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_4",
+              "type": "tuple"
+            }
+          ],
+          "name": "param_1",
+          "type": "tuple",
+          "indexed": false
+        }
+      ],
+      "outputs": [],
+      "anonymous": false,
+      "_dlt_meta": {
+        "selector": "0xf313c253a5be72c29d0deb2c8768a9543744ac03d6b3cafd50cc976f1c2632fc",
+        "block": 16406389
+      }
+    },
+    {
+      "name": "tryBulkDepositFor",
+      "type": "function",
+      "inputs": [
+        {
+          "components": [
+            {
+              "name": "param_0_0",
+              "type": "uint256"
+            },
+            {
+              "name": "param_0_1",
+              "type": "uint8"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_0_2_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_0_2_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_0_2_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_0_2",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_0_3_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_0_3_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_0_3_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_0_3",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_0_4_0",
+                  "type": "uint8"
+                },
+                {
+                  "name": "param_0_4_1",
+                  "type": "uint256"
+                },
+                {
+                  "name": "param_0_4_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_0_4",
+              "type": "tuple"
+            }
+          ],
+          "name": "param_0",
+          "type": "tuple[]"
+        }
+      ],
+      "outputs": [],
+      "_dlt_meta": {
+        "selector": "0xb9afa177",
+        "block": 16408990
+      }
+    },
+    {
+      "name": "Deposited",
+      "type": "event",
+      "inputs": [
+        {
+          "name": "param_0",
+          "type": "bytes32",
+          "indexed": false
+        },
+        {
+          "components": [
+            {
+              "name": "param_1_0",
+              "type": "uint256"
+            },
+            {
+              "name": "param_1_1",
+              "type": "uint8"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_2_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_2",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_3_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_3",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_4_0",
+                  "type": "uint8"
+                },
+                {
+                  "name": "param_1_4_1",
+                  "type": "uint256"
+                },
+                {
+                  "name": "param_1_4_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_4",
+              "type": "tuple"
+            }
+          ],
+          "name": "param_1",
+          "type": "tuple",
+          "indexed": false
+        }
+      ],
+      "outputs": [],
+      "anonymous": false,
+      "_dlt_meta": {
+        "selector": "0x8d20d8121a34dded9035ff5b43e901c142824f7a22126392992c353c37890524",
+        "block": 16408994
+      }
+    },
+    {
+      "name": "tryBulkAcknowledgeMainchainWithdrew",
+      "type": "function",
+      "inputs": [
+        {
+          "name": "param_0",
+          "type": "uint256[]"
+        }
+      ],
+      "outputs": [],
+      "_dlt_meta": {
+        "selector": "0x17fa2ea1",
+        "block": 16409185
+      }
+    },
+    {
+      "name": "MainchainWithdrew",
+      "type": "event",
+      "inputs": [
+        {
+          "name": "param_0",
+          "type": "bytes32",
+          "indexed": false
+        },
+        {
+          "components": [
+            {
+              "name": "param_1_0",
+              "type": "uint256"
+            },
+            {
+              "name": "param_1_1",
+              "type": "uint8"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_2_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_2_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_2",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_3_0",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_1",
+                  "type": "address"
+                },
+                {
+                  "name": "param_1_3_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_3",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "param_1_4_0",
+                  "type": "uint8"
+                },
+                {
+                  "name": "param_1_4_1",
+                  "type": "uint256"
+                },
+                {
+                  "name": "param_1_4_2",
+                  "type": "uint256"
+                }
+              ],
+              "name": "param_1_4",
+              "type": "tuple"
+            }
+          ],
+          "name": "param_1",
+          "type": "tuple",
+          "indexed": false
+        }
+      ],
+      "outputs": [],
+      "anonymous": false,
+      "_dlt_meta": {
+        "selector": "0x62520d049932cdee872e9b3c59c0f6073637147e5e9bc8b050b062430eaf5c9f",
+        "block": 16409199
+      }
+    }
+  ],
+  "unknown_selectors": {}
+}
