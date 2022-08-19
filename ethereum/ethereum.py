@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, Type, TypedDict, Union, cast, Sequence
 from hexbytes import HexBytes
 import requests
@@ -39,20 +40,24 @@ HTTP_PROVIDER_HEADERS = {
 REQUESTS_TIMEOUT = (20, 12)
 
 
-def schema() -> Schema:
+def get_schema() -> Schema:
     # all Ethereum compatible blockchains have the same schema so we just provide a nice yaml file
     return Pipeline.load_schema_from_file("ethereum/ethereum_schema.yml")
 
 
-def data(node_url: str, last_block: int = None, max_blocks: int = None, abi_dir: str = None, lag: int = 2, is_poa: bool = False, supports_batching: bool = True, state: DictStrAny = None) -> Iterator[DictStrAny]:
-    return _get_source(False, node_url, last_block, max_blocks, abi_dir, lag, is_poa, supports_batching, state)  # type: ignore
+def get_blocks(
+    node_url: str, last_block: int = None, max_blocks: int = None, max_initial_blocks: int = None, abi_dir: str = None, lag: int = 2, is_poa: bool = False, supports_batching: bool = True, state: DictStrAny = None
+    ) -> Iterator[DictStrAny]:
+    return _get_blocks(False, node_url, last_block, max_blocks, max_initial_blocks, abi_dir, lag, is_poa, supports_batching, state)  # type: ignore
 
 
-def deferred_data(node_url: str, last_block: int = None, max_blocks: int = None, abi_dir: str = None, lag: int = 2, is_poa: bool = False, supports_batching: bool = True, state: DictStrAny = None) -> Iterator[TDeferred[DictStrAny]]:
-    return _get_source(True, node_url, last_block, max_blocks, abi_dir, lag, is_poa, supports_batching, state)  # type: ignore
+def get_blocks_deferred(
+    node_url: str, last_block: int = None, max_blocks: int = None, max_initial_blocks: int = None, abi_dir: str = None, lag: int = 2, is_poa: bool = False, supports_batching: bool = True, state: DictStrAny = None
+    ) -> Iterator[TDeferred[DictStrAny]]:
+    return _get_blocks(True, node_url, last_block, max_blocks, max_initial_blocks, abi_dir, lag, is_poa, supports_batching, state)  # type: ignore
 
 
-def known_contracts(abi_dir: str) -> Iterator[DictStrAny]:
+def get_known_contracts(abi_dir: str) -> Iterator[DictStrAny]:
     # load abis and return as tables
     contracts = maybe_load_abis(abi_dir, only_for_decode=False)
     for contract in contracts.values():
@@ -60,7 +65,7 @@ def known_contracts(abi_dir: str) -> Iterator[DictStrAny]:
         yield {k: contract.get(k) for k in ["address", "name", "type", "decimals", "token_name", "token_symbol"]}
 
 
-def _get_source(is_deferred: bool, node_url: str, last_block: int, max_blocks: int, abi_dir: str, lag: int, is_poa: bool, supports_batching: bool, state: DictStrAny) -> Union[Iterator[TItem], Iterator[TDeferred[DictStrAny]]]:
+def _get_blocks(is_deferred: bool, node_url: str, last_block: int, max_blocks: int, max_initial_blocks: int, abi_dir: str, lag: int, is_poa: bool, supports_batching: bool, state: DictStrAny) -> Union[Iterator[TItem], Iterator[TDeferred[DictStrAny]]]:
     # this code is run only once
     w3 = Web3(Web3.HTTPProvider(node_url, request_kwargs={"headers": HTTP_PROVIDER_HEADERS, "timeout": REQUESTS_TIMEOUT}))
     if is_poa:
@@ -73,7 +78,7 @@ def _get_source(is_deferred: bool, node_url: str, last_block: int, max_blocks: i
     chain_id = w3.eth.chain_id
 
     # get block range
-    current_block, last_block = _get_block_range(w3, state, last_block, max_blocks, lag)
+    current_block, last_block = _get_block_range(w3, state, last_block, max_blocks, max_initial_blocks, lag)
     if current_block > last_block:
         logger.info("No new blocks. exiting")
         return
@@ -117,28 +122,32 @@ def _get_source(is_deferred: bool, node_url: str, last_block: int, max_blocks: i
         state["ethereum_current_block"] = current_block
 
 
-def _get_block_range(w3: Web3, state: DictStrAny, last_block: Optional[int], max_blocks: Optional[int], lag: int) -> Tuple[int, int]:
+def _get_block_range(w3: Web3, state: DictStrAny, last_block: Optional[int], max_blocks: Optional[int], max_initial_blocks: Optional[int], lag: int) -> Tuple[int, int]:
     # last block is not provided then take the highest block from the chain
     if last_block is None:
         last_block = w3.eth.get_block_number() - lag
         logger.info(f"Got last block {last_block} from chain (with {lag} blocks lag")
-
-    # if max blocks not provided then take all the blocks
-    if max_blocks is None:
-        max_blocks = last_block + 1
-    # get default current block
-    current_block = last_block - max_blocks + 1
 
     # get current block from the state if available
     state_current_block: int = None
     if state:
         state_current_block = state.get("ethereum_current_block")
     if state_current_block:
+        # if max blocks not provided then take all the blocks
+        if max_blocks is None:
+            max_blocks = last_block + 1
+        # get default current block
+        current_block = last_block - max_blocks + 1
         current_block = max(state_current_block, current_block)
         logger.info(f"Will continue from saved state ({state_current_block}): obtaining blocks {current_block} to {last_block}")
         if current_block > state_current_block:
             logger.warning(f"Will skip blocks from {state_current_block} to {current_block - 1} because max blocks {max_blocks} was set")
     else:
+        # if max blocks not provided then take all the blocks
+        if max_initial_blocks is None:
+            max_initial_blocks = last_block + 1
+        # get default current block
+        current_block = last_block - max_initial_blocks + 1
         logger.info(f"Getting blocks from {current_block} to {last_block}")
 
     assert current_block >= 0
@@ -177,6 +186,7 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
 
     receipts = []
     log_formatters: Callable[..., Any] = get_result_formatters(RPC.eth_getLogs, w3.eth)  # type: ignore
+    receipt_formatters: Callable[..., Any] = get_result_formatters(RPC.eth_getTransactionReceipt, w3.eth)  # type: ignore
     provider = cast(HTTPProvider, w3.provider)
     rpc_endpoint_url = provider.endpoint_uri
     if supports_batching:
@@ -207,8 +217,8 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
     for tx_receipt, tx in zip(receipts, transactions):
         if "result" not in tx_receipt:
             raise ValueError(tx_receipt)
-        tx_receipt = tx_receipt["result"]
-        assert tx_receipt["transactionHash"] == tx["transactionHash"].hex()
+        tx_receipt = receipt_formatters(tx_receipt["result"])
+        assert tx_receipt["transactionHash"] == tx["transactionHash"]
         tx["transactionIndex"] = tx_receipt["transactionIndex"]
         tx["status"] = tx_receipt["status"]
         tx["logs"] = [dict(log) for log in log_formatters(tx_receipt["logs"])]
@@ -218,6 +228,13 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
             # log["blockHash"] = block["hash"]
 
     return block
+
+
+def _decoded_table_name(contract_name: str, typ_: str, abi_name: str, selector: HexBytes) -> str:
+    # many selectors have overloads which would generate identical table names
+    # add 1 byte suffix to the table name to reduce that probability sufficiently
+    overload_suffix = hex(reduce(lambda p, n: p ^ n, selector))[2:]
+    return f"{contract_name}_{typ_}_{abi_name}_{overload_suffix}"
 
 
 def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[ChecksumAddress, TABIInfo]) -> Iterator[StrAny]:
@@ -251,7 +268,7 @@ def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[Checksu
                     maybe_update_abi(abi_info, selector, tx_abi, block["blockNumber"])
 
             if tx_args:
-                table_name = abi_info["name"] + "_calls_" + fn_name
+                table_name = _decoded_table_name(abi_info["name"], "call", fn_name, selector)
                 tx_args =  with_table_name(tx_args, table_name)
                 # yield arguments with reference to transaction
                 tx_args.update(tx_info)
@@ -275,7 +292,7 @@ def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[Checksu
                         maybe_update_abi(abi_info, selector, event_abi, block["blockNumber"])
 
                 if event_data:
-                    table_name = abi_info["name"] + "_logs_" + event_data["event"]
+                    table_name = _decoded_table_name(abi_info["name"], "logs", event_data["event"], selector)
                     ev_args =  with_table_name(dict(event_data["args"]), table_name)
                     # yield arguments with reference to transaction and log
                     ev_args.update(tx_info)

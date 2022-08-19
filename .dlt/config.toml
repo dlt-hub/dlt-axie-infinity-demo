@@ -1,0 +1,2 @@
+working_dir="data/pipeline"
+export_schema_path="schemas"
