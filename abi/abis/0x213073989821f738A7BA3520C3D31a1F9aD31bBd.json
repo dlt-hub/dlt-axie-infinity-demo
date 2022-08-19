@@ -713,23 +713,23 @@
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_seller",
           "type": "address"
         },
         {
-          "name": "param_1",
+          "name": "_token",
           "type": "address"
         },
         {
-          "name": "param_2",
+          "name": "_bidAmount",
           "type": "uint256"
         },
         {
-          "name": "param_3",
+          "name": "_listingIndex",
           "type": "uint256"
         },
         {
-          "name": "param_4",
+          "name": "_listingState",
           "type": "uint256"
         },
         {
@@ -737,11 +737,7 @@
           "type": "address"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xb4eee36c",
-        "block": 16070944
-      }
+      "outputs": []
     },
     {
       "name": "swapTokensAndSettleAuction",

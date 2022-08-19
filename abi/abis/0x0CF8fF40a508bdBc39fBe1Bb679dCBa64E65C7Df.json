@@ -7,19 +7,15 @@
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_withdrawals",
           "type": "uint256[]"
         },
         {
-          "name": "param_1",
+          "name": "_signatures",
           "type": "bytes[]"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xfa389659",
-        "block": 16406354
-      }
+      "outputs": []
     },
     {
       "name": "requestWithdrawalFor",
@@ -28,117 +24,113 @@
         {
           "components": [
             {
-              "name": "param_0_0",
+              "name": "recipientAddr",
               "type": "address"
             },
             {
-              "name": "param_0_1",
+              "name": "tokenAddr",
               "type": "address"
             },
             {
               "components": [
                 {
-                  "name": "param_0_2_0",
+                  "name": "erc",
                   "type": "uint8"
                 },
                 {
-                  "name": "param_0_2_1",
+                  "name": "id",
                   "type": "uint256"
                 },
                 {
-                  "name": "param_0_2_2",
+                  "name": "quantity",
                   "type": "uint256"
                 }
               ],
-              "name": "param_0_2",
+              "name": "info",
               "type": "tuple"
             }
           ],
-          "name": "param_0",
+          "name": "_request",
           "type": "tuple"
         },
         {
-          "name": "param_1",
+          "name": "_chainId",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x0b1ff17f",
-        "block": 16406389
-      }
+      "outputs": []
     },
     {
       "name": "WithdrawalRequested",
       "type": "event",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "receiptHash",
           "type": "bytes32",
           "indexed": false
         },
         {
           "components": [
             {
-              "name": "param_1_0",
+              "name": "id",
               "type": "uint256"
             },
             {
-              "name": "param_1_1",
+              "name": "kind",
               "type": "uint8"
             },
             {
               "components": [
                 {
-                  "name": "param_1_2_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_2",
+              "name": "mainchain",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_3_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_3",
+              "name": "ronin",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_4_0",
+                  "name": "erc",
                   "type": "uint8"
                 },
                 {
-                  "name": "param_1_4_1",
+                  "name": "id",
                   "type": "uint256"
                 },
                 {
-                  "name": "param_1_4_2",
+                  "name": "quantity",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_4",
+              "name": "info",
               "type": "tuple"
             }
           ],
@@ -148,11 +140,7 @@
         }
       ],
       "outputs": [],
-      "anonymous": false,
-      "_dlt_meta": {
-        "selector": "0xf313c253a5be72c29d0deb2c8768a9543744ac03d6b3cafd50cc976f1c2632fc",
-        "block": 16406389
-      }
+      "anonymous": false
     },
     {
       "name": "tryBulkDepositFor",
@@ -161,264 +149,341 @@
         {
           "components": [
             {
-              "name": "param_0_0",
+              "name": "id",
               "type": "uint256"
             },
             {
-              "name": "param_0_1",
+              "name": "kind",
               "type": "uint8"
             },
             {
               "components": [
                 {
-                  "name": "param_0_2_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_0_2_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_0_2_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_0_2",
+              "name": "mainchain",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_0_3_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_0_3_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_0_3_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_0_3",
+              "name": "ronin",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_0_4_0",
+                  "name": "erc",
                   "type": "uint8"
                 },
                 {
-                  "name": "param_0_4_1",
+                  "name": "id",
                   "type": "uint256"
                 },
                 {
-                  "name": "param_0_4_2",
+                  "name": "quantity",
                   "type": "uint256"
                 }
               ],
-              "name": "param_0_4",
+              "name": "info",
               "type": "tuple"
             }
           ],
-          "name": "param_0",
+          "name": "_receipts",
           "type": "tuple[]"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xb9afa177",
-        "block": 16408990
-      }
+      "outputs": []
     },
     {
       "name": "Deposited",
       "type": "event",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "receiptHash",
           "type": "bytes32",
           "indexed": false
         },
         {
           "components": [
             {
-              "name": "param_1_0",
+              "name": "id",
               "type": "uint256"
             },
             {
-              "name": "param_1_1",
+              "name": "kind",
               "type": "uint8"
             },
             {
               "components": [
                 {
-                  "name": "param_1_2_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_2",
+              "name": "mainchain",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_3_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_3",
+              "name": "ronin",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_4_0",
+                  "name": "erc",
                   "type": "uint8"
                 },
                 {
-                  "name": "param_1_4_1",
+                  "name": "id",
                   "type": "uint256"
                 },
                 {
-                  "name": "param_1_4_2",
+                  "name": "quantity",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_4",
+              "name": "info",
               "type": "tuple"
             }
           ],
-          "name": "param_1",
+          "name": "receipt",
           "type": "tuple",
           "indexed": false
         }
       ],
       "outputs": [],
-      "anonymous": false,
-      "_dlt_meta": {
-        "selector": "0x8d20d8121a34dded9035ff5b43e901c142824f7a22126392992c353c37890524",
-        "block": 16408994
-      }
+      "anonymous": false
     },
     {
       "name": "tryBulkAcknowledgeMainchainWithdrew",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_withdrawalIds",
           "type": "uint256[]"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x17fa2ea1",
-        "block": 16409185
-      }
+      "outputs": []
     },
     {
       "name": "MainchainWithdrew",
       "type": "event",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "receiptHash",
           "type": "bytes32",
           "indexed": false
         },
         {
           "components": [
             {
-              "name": "param_1_0",
+              "name": "id",
               "type": "uint256"
             },
             {
-              "name": "param_1_1",
+              "name": "kind",
               "type": "uint8"
             },
             {
               "components": [
                 {
-                  "name": "param_1_2_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_2_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_2",
+              "name": "mainchain",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_3_0",
+                  "name": "addr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_1",
+                  "name": "tokenAddr",
                   "type": "address"
                 },
                 {
-                  "name": "param_1_3_2",
+                  "name": "chainId",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_3",
+              "name": "ronin",
               "type": "tuple"
             },
             {
               "components": [
                 {
-                  "name": "param_1_4_0",
+                  "name": "erc",
                   "type": "uint8"
                 },
                 {
-                  "name": "param_1_4_1",
+                  "name": "id",
                   "type": "uint256"
                 },
                 {
-                  "name": "param_1_4_2",
+                  "name": "quantity",
                   "type": "uint256"
                 }
               ],
-              "name": "param_1_4",
+              "name": "info",
               "type": "tuple"
             }
           ],
-          "name": "param_1",
+          "name": "receipt",
           "type": "tuple",
           "indexed": false
         }
       ],
       "outputs": [],
-      "anonymous": false,
-      "_dlt_meta": {
-        "selector": "0x62520d049932cdee872e9b3c59c0f6073637147e5e9bc8b050b062430eaf5c9f",
-        "block": 16409199
-      }
+      "anonymous": false
+    },
+    {
+      "name": "requestWithdrawalSignatures",
+      "type": "function",
+      "inputs": [
+        {
+          "name": "_withdrawalId",
+          "type": "uint256"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "WithdrawalSignaturesRequested",
+      "type": "event",
+      "inputs": [
+        {
+          "name": "receiptHash",
+          "type": "bytes32",
+          "indexed": false
+        },
+        {
+          "components": [
+            {
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "name": "kind",
+              "type": "uint8"
+            },
+            {
+              "components": [
+                {
+                  "name": "addr",
+                  "type": "address"
+                },
+                {
+                  "name": "tokenAddr",
+                  "type": "address"
+                },
+                {
+                  "name": "chainId",
+                  "type": "uint256"
+                }
+              ],
+              "name": "mainchain",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "addr",
+                  "type": "address"
+                },
+                {
+                  "name": "tokenAddr",
+                  "type": "address"
+                },
+                {
+                  "name": "chainId",
+                  "type": "uint256"
+                }
+              ],
+              "name": "ronin",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "name": "erc",
+                  "type": "uint8"
+                },
+                {
+                  "name": "id",
+                  "type": "uint256"
+                },
+                {
+                  "name": "quantity",
+                  "type": "uint256"
+                }
+              ],
+              "name": "info",
+              "type": "tuple"
+            }
+          ],
+          "name": "receipt",
+          "type": "tuple",
+          "indexed": false
+        }
+      ],
+      "outputs": [],
+      "anonymous": false
     }
   ],
   "unknown_selectors": {}

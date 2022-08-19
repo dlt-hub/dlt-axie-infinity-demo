@@ -877,22 +877,18 @@
       "type": "event",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_owner",
           "type": "address",
           "indexed": true
         },
         {
-          "name": "param_1",
+          "name": "_amount",
           "type": "uint256",
           "indexed": true
         }
       ],
       "outputs": [],
-      "anonymous": false,
-      "_dlt_meta": {
-        "selector": "0xe74d4deada483a86175e3997d158999330584cf5f682afd2f4ce28b0ce9d7d03",
-        "block": 16070969
-      }
+      "anonymous": false
     }
   ],
   "unknown_selectors": {},

@@ -7,330 +7,290 @@
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountIn",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_amountOutMin",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_3",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_4",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x38ed1739",
-        "block": 16385092
-      }
+      "outputs": []
     },
     {
       "name": "removeLiquidity",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_tokenA",
           "type": "address"
         },
         {
-          "name": "param_1",
+          "name": "_tokenB",
           "type": "address"
         },
         {
-          "name": "param_2",
+          "name": "_liquidity",
           "type": "uint256"
         },
         {
-          "name": "param_3",
+          "name": "_amountAMin",
           "type": "uint256"
         },
         {
-          "name": "param_4",
+          "name": "_amountBMin",
           "type": "uint256"
         },
         {
-          "name": "param_5",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_6",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xbaa2abde",
-        "block": 16406354
-      }
+      "outputs": []
     },
     {
       "name": "swapTokensForExactTokens",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountOut",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_amountInMax",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_3",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_4",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x8803dbee",
-        "block": 16408751
-      }
+      "outputs": []
     },
     {
       "name": "swapExactTokensForRON",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountIn",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_amountOutMin",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_3",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_4",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xf05b8c56",
-        "block": 16408774
-      }
+      "outputs": []
     },
     {
       "name": "swapExactRONForTokens",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountOutMin",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_2",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_3",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x7da5cd66",
-        "block": 16408779
-      }
+      "outputs": []
     },
     {
       "name": "swapTokensForExactRON",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountOut",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_amountInMax",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_3",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_4",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xa5089b8f",
-        "block": 16408802
-      }
+      "outputs": []
     },
     {
       "name": "swapRONForExactTokens",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_amountOut",
           "type": "uint256"
         },
         {
-          "name": "param_1",
+          "name": "_path",
           "type": "address[]"
         },
         {
-          "name": "param_2",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_3",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0x54bc383f",
-        "block": 16408870
-      }
+      "outputs": []
     },
     {
       "name": "addLiquidity",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_tokenA",
           "type": "address"
         },
         {
-          "name": "param_1",
+          "name": "_tokenB",
           "type": "address"
         },
         {
-          "name": "param_2",
+          "name": "_amountADesired",
           "type": "uint256"
         },
         {
-          "name": "param_3",
+          "name": "_amountBDesired",
           "type": "uint256"
         },
         {
-          "name": "param_4",
+          "name": "_amountAMin",
           "type": "uint256"
         },
         {
-          "name": "param_5",
+          "name": "_amountBMin",
           "type": "uint256"
         },
         {
-          "name": "param_6",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_7",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xe8e33700",
-        "block": 16408898
-      }
+      "outputs": []
     },
     {
       "name": "addLiquidityRON",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_token",
           "type": "address"
         },
         {
-          "name": "param_1",
+          "name": "_amountTokenDesired",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_amountTokenMin",
           "type": "uint256"
         },
         {
-          "name": "param_3",
+          "name": "_amountRONMin",
           "type": "uint256"
         },
         {
-          "name": "param_4",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_5",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xf8f712c1",
-        "block": 16408920
-      }
+      "outputs": []
     },
     {
       "name": "removeLiquidityRON",
       "type": "function",
       "inputs": [
         {
-          "name": "param_0",
+          "name": "_token",
           "type": "address"
         },
         {
-          "name": "param_1",
+          "name": "_liquidity",
           "type": "uint256"
         },
         {
-          "name": "param_2",
+          "name": "_amountTokenMin",
           "type": "uint256"
         },
         {
-          "name": "param_3",
+          "name": "_amountRONMin",
           "type": "uint256"
         },
         {
-          "name": "param_4",
+          "name": "_to",
           "type": "address"
         },
         {
-          "name": "param_5",
+          "name": "_deadline",
           "type": "uint256"
         }
       ],
-      "outputs": [],
-      "_dlt_meta": {
-        "selector": "0xfb536a43",
-        "block": 16409200
-      }
+      "outputs": []
     }
   ],
   "unknown_selectors": {}
