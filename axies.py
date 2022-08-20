@@ -1,5 +1,4 @@
 from dlt.common import logger
-from dlt.common.time import sleep
 
 from dlt.pipeline import Pipeline, CannotRestorePipelineException
 
@@ -7,7 +6,7 @@ from ethereum import get_schema,get_blocks, get_known_contracts
 from helpers import config, secrets, get_credentials
 
 
-credentials = get_credentials("bigquery", "axies_2", secrets["gcp_credentials"])
+credentials = get_credentials("bigquery", "axies_2", secrets.get("gcp_credentials", {}))
 
 abi_dir = "abi/abis"
 export_schema_path = config.get("export_schema_path")

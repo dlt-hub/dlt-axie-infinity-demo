@@ -3,6 +3,8 @@
 .mypy_cache
 .pytest_cache
 htmlcov
+data
+.git
 .coverage
 __pycache__
 .eggs

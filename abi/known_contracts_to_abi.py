@@ -14,7 +14,7 @@ with open("abi/known_contracts.json", "r", encoding="utf-8") as f:
 for r_c in ronin_known_contracts["pageProps"]["allVerifiedContracts"]:
     address = to_checksum_address(r_c["address"])
     if address in contracts:
-        contract = contracts[address]
+        contract: TABIInfo = contracts[address]
         print(f"contract {address} with name {contract['name']} already exists, modding")
         content = contract["file_content"]
     else:
@@ -22,7 +22,7 @@ for r_c in ronin_known_contracts["pageProps"]["allVerifiedContracts"]:
         content = {
             "should_decode": False
         }
-        contract: TABIInfo = {
+        contract = {
             "file_content": content
         }
         contracts[address] = contract
