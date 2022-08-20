@@ -20,8 +20,8 @@ try:
     from web3._utils.rpc_abi import RPC
     from web3.types import LogReceipt, EventData, ABIEvent
 
-    from examples.sources.eth_source_utils import maybe_load_abis, TABIInfo, ABIFunction
-    from examples.sources.eth_source_utils import decode_log, decode_tx, fetch_sig_and_decode_log, fetch_sig_and_decode_tx, maybe_update_abi, prettify_decoded, save_abis
+    from .eth_source_utils import maybe_load_abis, TABIInfo, ABIFunction
+    from .eth_source_utils import decode_log, decode_tx, fetch_sig_and_decode_log, fetch_sig_and_decode_tx, maybe_update_abi, prettify_decoded, save_abis
 except ImportError:
     raise MissingDependencyException("Ethereum Source", ["web3"], "Web3 is a all purpose python library to interact with Ethereum-compatible blockchains.")
 
@@ -38,6 +38,7 @@ HTTP_PROVIDER_HEADERS = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36"
     }
 REQUESTS_TIMEOUT = (20, 12)
+ADD_OVERLOAD_TABLE_NAME_SUFFIX = False
 
 
 def get_schema() -> Schema:
@@ -89,23 +90,23 @@ def _get_blocks(is_deferred: bool, node_url: str, last_block: int, max_blocks: i
 
         @defer_iterator
         @with_retry()
-        def _get_block_deferred() -> List[DictStrAny]:
+        def _get_block_deferred(c_b: int) -> List[DictStrAny]:
             # get block
-            block = [_get_block(w3, current_block, chain_id, supports_batching)]
+            block_ = [_get_block(w3, c_b, chain_id, supports_batching)]
             # decode all transactions in the block
-            block.extend(_decode_block(w3, block[0], abi_dir, contracts))
+            block_.extend(_decode_block(w3, block_[0], abi_dir, contracts))  # type: ignore
             # return all together
-            return block
+            return block_
 
         @with_retry()
-        def _get_block_retry() -> DictStrAny:
-            return _get_block(w3, current_block, chain_id, supports_batching)
+        def _get_block_retry(c_b: int) -> DictStrAny:
+            return _get_block(w3, c_b, chain_id, supports_batching)
 
         # yield deferred items or actual item values
         if is_deferred:
-            yield _get_block_deferred()
+            yield _get_block_deferred(current_block)
         else:
-            block = _get_block_retry()
+            block = _get_block_retry(current_block)
             # yield block
             yield block
             # yield decoded transactions one by one
@@ -143,6 +144,9 @@ def _get_block_range(w3: Web3, state: DictStrAny, last_block: Optional[int], max
         if current_block > state_current_block:
             logger.warning(f"Will skip blocks from {state_current_block} to {current_block - 1} because max blocks {max_blocks} was set")
     else:
+        # if max blocks is provided then use it as well
+        if max_initial_blocks is None:
+            max_initial_blocks = max_blocks
         # if max blocks not provided then take all the blocks
         if max_initial_blocks is None:
             max_initial_blocks = last_block + 1
@@ -233,8 +237,12 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
 def _decoded_table_name(contract_name: str, typ_: str, abi_name: str, selector: HexBytes) -> str:
     # many selectors have overloads which would generate identical table names
     # add 1 byte suffix to the table name to reduce that probability sufficiently
-    overload_suffix = hex(reduce(lambda p, n: p ^ n, selector))[2:]
-    return f"{contract_name}_{typ_}_{abi_name}_{overload_suffix}"
+    # TODO: make it a global flag if we add it
+    if ADD_OVERLOAD_TABLE_NAME_SUFFIX:
+        overload_suffix = "_" + hex(reduce(lambda p, n: p ^ n, selector))[2:]
+    else:
+        overload_suffix = ""
+    return f"{contract_name}_{typ_}_{abi_name}{overload_suffix}"
 
 
 def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[ChecksumAddress, TABIInfo]) -> Iterator[StrAny]:

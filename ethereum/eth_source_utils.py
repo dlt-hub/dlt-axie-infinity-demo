@@ -2,9 +2,9 @@ import os
 import itertools
 from hexbytes import HexBytes
 import requests
-from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Type, TypedDict, Tuple, cast
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Union, TypedDict, Tuple, cast
 
-from web3.types import ABI, ABIElement, ABIFunction, ABIEvent, ABIFunctionParams, ABIFunctionComponents, LogReceipt, EventData
+from web3.types import ABI, ABIElement, ABIFunction, ABIEvent, ABIFunctionParams, ABIEventParams,  ABIFunctionComponents, LogReceipt, EventData
 from web3._utils.abi import get_abi_input_names, get_abi_input_types, map_abi_data, get_indexed_event_inputs, normalize_event_input_types
 from web3._utils.normalizers import BASE_RETURN_NORMALIZERS
 from web3._utils.events import get_event_data, get_event_abi_types_for_decoding
@@ -12,7 +12,7 @@ from eth_typing import HexStr
 from eth_typing.evm import ChecksumAddress
 from eth_abi.codec import ABIDecoder
 from eth_abi.exceptions import DecodingError
-from eth_abi.grammar import parse as parse_abi_type, TupleType as ABITupleType
+from eth_abi.grammar import parse as parse_abi_type
 from eth_utils.address import to_checksum_address
 from eth_utils.abi import function_abi_to_4byte_selector, event_abi_to_log_topic
 
@@ -263,7 +263,7 @@ def fetch_sig_and_decode_tx(codec: ABIDecoder, tx_input: HexBytes) -> Tuple[str,
         assert abi_to_selector(abi) == selector
         try:
             return sig_name, abi["name"], decode_tx(codec, abi, params), abi
-        except DecodingError as ex:
+        except DecodingError:
             continue
 
     # no known signatures or nothing could be decoded
@@ -273,7 +273,7 @@ def fetch_sig_and_decode_tx(codec: ABIDecoder, tx_input: HexBytes) -> Tuple[str,
 def prettify_decoded(contract: TABIInfo, decoded: DictStrAny, abi: ABIElement, selector: HexBytes) -> DictStrAny:
     # this gets rid of tuples from decoded and must always go first
     recode_tuples(decoded, abi)
-    uint_to_wei(contract, decoded, abi, selector)
+    uint_to_wei(contract, decoded, abi["inputs"], selector)
     flatten_batches(decoded, abi)
     return decoded
 
@@ -290,33 +290,37 @@ KNOWN_SELECTORS_DECIMALS = {
 }
 
 
-def uint_to_wei(contract: TABIInfo, decoded: DictStrAny, abi: ABIElement, selector: HexBytes) -> None:
+def uint_to_wei(contract: TABIInfo, decoded: DictStrAny, inputs: Union[Sequence[ABIFunctionParams], Sequence[ABIEventParams]], selector: HexBytes) -> None:
     # converts all integer types > 2**64 into Wei type
-    for idx, input_ in enumerate(abi["inputs"]):
-
+    for idx, input_ in enumerate(inputs):
 
         def uint_list_to_wei(list_v: List[Any], decimals: int = 0) -> None:
-            for idx, l_v in enumerate(list_v):
+            for jdx, l_v in enumerate(list_v):
                 if isinstance(l_v, int):
-                    list_v[idx] = Wei.from_int256(l_v, decimals=decimals)
+                    list_v[jdx] = Wei.from_int256(l_v, decimals=decimals)
                 if isinstance(l_v, List):
                     uint_list_to_wei(l_v, decimals)
 
-
         parsed_type = parse_abi_type(input_["type"])
         val = decoded[input_["name"]]
-        if val is tuple:
+        if isinstance(val, tuple):
             raise ValueError("Tuple found in decoded data: " + str(val))
+        # dicts are results of recoding tuples by recode_tuples so `components` must be present
+        if isinstance(val, dict):
+            # convert recursively for tuples
+            uint_to_wei(contract, val, input_["components"], selector)  # type: ignore
+            return
         bit_size = 0
         if parsed_type.base in ["uint", "int"]:
             bit_size = int(parsed_type.sub)
         elif parsed_type.base in ["ufixed", "fixed"]:
             bit_size = int(parsed_type[0])
-        if bit_size > 64:
+        # bigint is signed so we must have 63 bit integer to fit (one bit is sign). in case of signed integers they fit in bigint 1:1
+        if bit_size > 63 and parsed_type.base[0] == "u" or bit_size > 64 and parsed_type.base[0] != "u":
             # not fitting in int -> convert to wei
             index_count = 0
             if len(selector) == 32:
-                index_count = len(get_indexed_event_inputs(abi))  # type: ignore
+                index_count = len([arg for arg in inputs if arg.get("indexed") is True])
             decimals = KNOWN_SELECTORS_DECIMALS.get((selector, idx, index_count), 0)
             if decimals > 0:
                 decimals = contract.get("decimals", decimals)
@@ -352,13 +356,13 @@ def flatten_batches(decoded: DictStrAny, abi: ABIElement) -> None:
 
 def recode_tuples(decoded: DictStrAny, abi: ABIElement) -> None:
     # replaces tuples with dicts representing named tuples
-    def _replace_component(decoded_component: Sequence[Any], inputs: Sequence[ABIFunctionComponents]) -> Dict[str, Any]:
+    def _replace_component(decoded_component: Iterable[Any], inputs: Sequence[ABIFunctionComponents]) -> Dict[str, Any]:
         # convert tuple to dict
         recoded_dict = {input_["name"]:item for item, input_ in zip(decoded_component, inputs)}
         for key, item, input_ in zip(recoded_dict.keys(), recoded_dict.values(), inputs):
             if input_["type"] == "tuple" and isinstance(item, Sequence):
                 recoded = _replace_component(item, input_["components"])
-                recoded_dict[key] = recoded  # type: ignore
+                recoded_dict[key] = recoded
         return recoded_dict
 
     input_: ABIFunctionParams = None
