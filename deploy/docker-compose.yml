@@ -1,0 +1,58 @@
+version: "3.8"
+# base service definition derived by all environments
+x-prometheus-port: &prometheus-port
+  - "8000"
+
+x-pipeline-image: &pipeline-image scalevector/dlt:1.0.0
+
+services:
+  axie-extractor:
+    restart: "no"
+    image: *pipeline-image
+    labels:
+      kompose.controller.type: deployment
+      kompose.volume.size: 1Gi
+      kompose.image-pull-policy: Always
+      kompose.volume.storage-class-name: gp2
+      prometheus.io/scrape: "true"
+      prometheus.io/path: "/"
+      prometheus.io/port: 8000
+      dlt.service.type: extractor
+    command: python axies.py
+    volumes:
+      - pipeline_volume:/var/local/pipeline
+    ports: *prometheus-port
+    env_file:
+      - envs/common.env
+      - local/envs/bigquery-credentials.env
+    secrets:
+      - gcp--private-key
+
+  axie-loader:
+    restart: "no"
+    image: *pipeline-image
+    labels:
+      kompose.controller.type: deployment
+      kompose.volume.size: 1Gi
+      kompose.image-pull-policy: Always
+      kompose.volume.storage-class-name: gp2
+      prometheus.io/scrape: "true"
+      prometheus.io/path: "/"
+      prometheus.io/port: 8000
+      dlt.service.type: loader
+    command: python axies_load.py
+    volumes:
+      - pipeline_volume:/var/local/pipeline
+    ports: *prometheus-port
+    env_file:
+      - envs/common.env
+      - local/envs/bigquery-credentials.env
+    secrets:
+      - gcp--private-key
+
+volumes:
+  pipeline_volume:
+
+secrets:
+  gcp--private-key:
+    file: local/secrets/gcp--private-key

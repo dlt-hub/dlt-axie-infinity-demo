@@ -1,0 +1,2 @@
+# this is production config
+working_dir="/var/local/pipeline"
