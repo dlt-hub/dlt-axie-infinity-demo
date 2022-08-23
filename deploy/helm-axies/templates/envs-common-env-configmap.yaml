@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  DEFAULT_DATASET: {{ .Values.envs.commonEnv.defaultDataset | quote }}
+  IS_DEVELOPMENT_CONFIG: {{ .Values.envs.commonEnv.isDevelopmentConfig | quote }}
+  LOG_LEVEL: {{ .Values.envs.commonEnv.logLevel | quote }}
+  PROMETHEUS_PORT: {{ .Values.envs.commonEnv.prometheusPort | quote }}
+  SENTRY_DSN: {{ .Values.envs.commonEnv.sentryDsn | quote }}
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: axie-extractor-envs-common-env
+  name: envs-common-env

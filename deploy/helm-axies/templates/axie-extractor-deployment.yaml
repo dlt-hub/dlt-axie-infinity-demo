@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    dlt.service.type: extractor
+    kompose.cmd: kompose convert -f helm-axies.yml -c --with-kompose-annotation=true
+      --controller deployment
+    kompose.controller.type: deployment
+    kompose.image-pull-policy: Always
+    kompose.version: 1.26.1 (a9d05d509)
+    kompose.volume.size: 1Gi
+    kompose.volume.storage-class-name: gp2
+    prometheus.io/path: /
+    prometheus.io/port: '8000'
+    prometheus.io/scrape: 'true'
+  creationTimestamp: null
+  labels:
+    io.kompose.service: axie-extractor
+  name: axie-extractor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: axie-extractor
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        dlt.service.type: extractor
+        kompose.cmd: kompose convert -f helm-axies.yml -c --with-kompose-annotation=true
+          --controller deployment
+        kompose.controller.type: deployment
+        kompose.image-pull-policy: Always
+        kompose.version: 1.26.1 (a9d05d509)
+        kompose.volume.size: 1Gi
+        kompose.volume.storage-class-name: gp2
+        prometheus.io/path: /
+        prometheus.io/port: '8000'
+        prometheus.io/scrape: 'true'
+      creationTimestamp: null
+      labels:
+        io.kompose.service: axie-extractor
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - while python axies.py; do echo "Running....."; done
+        env:
+        - name: DEFAULT_DATASET
+          valueFrom:
+            configMapKeyRef:
+              key: DEFAULT_DATASET
+              name: envs-common-env
+        - name: GCP__CLIENT_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              key: GCP__CLIENT_EMAIL
+              name: envs-bigquery-credentials-env
+        - name: GCP__HTTP_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              key: GCP__HTTP_TIMEOUT
+              name: envs-bigquery-credentials-env
+        - name: GCP__PROJECT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: GCP__PROJECT_ID
+              name: envs-bigquery-credentials-env
+        - name: GCP__RETRY_DEADLINE
+          valueFrom:
+            configMapKeyRef:
+              key: GCP__RETRY_DEADLINE
+              name: envs-bigquery-credentials-env
+        - name: IS_DEVELOPMENT_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: IS_DEVELOPMENT_CONFIG
+              name: envs-common-env
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              key: LOG_LEVEL
+              name: envs-common-env
+        - name: PROMETHEUS_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: PROMETHEUS_PORT
+              name: envs-common-env
+        - name: RUN_SLEEP
+          valueFrom:
+            configMapKeyRef:
+              key: RUN_SLEEP
+              name: envs-extractor-env
+        - name: SENTRY_DSN
+          valueFrom:
+            configMapKeyRef:
+              key: SENTRY_DSN
+              name: envs-common-env
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: KUBE_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: KUBE_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        image: {{ .Values.images.pipelineImage }}
+        imagePullPolicy: Always
+        name: axie-extractor
+        ports:
+        - containerPort: 8000
+        resources: {}
+        volumeMounts:
+        - mountPath: /run/secrets/gcp--private-key
+          name: gcp--private-key
+        - mountPath: /var/local/pipeline
+          name: pipeline-volume
+      nodeSelector: 
+
+        {{ toYaml .Values.nodeSelector | indent 2 }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: {{ .Values.pods.axieExtractorPod.terminationGracePeriodSeconds  }}
+      volumes:
+      - name: gcp--private-key
+        secret:
+          items:
+          - key: gcp--private-key
+            path: gcp--private-key
+          secretName: gcp--private-key
+      - name: pipeline-volume
+        persistentVolumeClaim:
+          claimName: pipeline-volume
+status: {}

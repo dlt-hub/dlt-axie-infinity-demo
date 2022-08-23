@@ -1,0 +1,32 @@
+envs:
+  bigqueryCredentialsEnv:
+    gcpClientEmail: set-me-up
+    gcpHttpTimeout: '20.0'
+    gcpProjectId: set-me-up
+    gcpRetryDeadline: '300.0'
+  commonEnv:
+    defaultDataset: axies_1_q
+    isDevelopmentConfig: 'False'
+    logLevel: DEBUG
+    prometheusPort: '8000'
+    sentryDsn: ''
+  extractorEnv:
+    runSleep: '30.0'
+  loaderEnv:
+    runSleep: '1'
+images:
+  pipelineImage: scalevector/dlt-axie-infinity-demo:1.0.0
+nodeSelector: {}
+pods:
+  axieExtractorPod:
+    terminationGracePeriodSeconds: 320
+  axieLoaderPod:
+    terminationGracePeriodSeconds: 320
+secrets:
+  gcpPrivateKey: set-me-up
+volumes:
+  accessModes:
+  - ReadWriteOnce
+  pipelineVolume:
+    storage: 1Gi
+  storageClassName: gp2

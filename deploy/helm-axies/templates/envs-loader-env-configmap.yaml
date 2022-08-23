@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  RUN_SLEEP: {{ .Values.envs.loaderEnv.runSleep | quote }}
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: axie-loader-envs-loader-env
+  name: envs-loader-env

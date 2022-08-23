@@ -15,6 +15,7 @@ parser.add_argument("helmdir",
                     metavar="helm-root-dir",
                     type=str,
                     help="Root directory with the Helm generated with kompose")
+# parser.add_argument("--cron-jobs", action="store_true", help="Converts all Deployments to CronJobs")
 
 args = parser.parse_args()
 
@@ -109,9 +110,9 @@ def extract_image(image: str) -> str:
     return label
 
 
-def extract_set(group: str, template: Dict[str, Any], kind: str) -> None:
-    # print(template["spec"])
-    spec = template["spec"]["template"]["spec"]
+def extract_pod(group: str, template: Dict[str, Any], kind: str) -> None:
+    spec = template["spec"]
+
     # add termination period
     if "terminationGracePeriodSeconds" not in spec:
         spec["terminationGracePeriodSeconds"] = 320
@@ -136,6 +137,12 @@ def extract_set(group: str, template: Dict[str, Any], kind: str) -> None:
                     f"Not all envs in {group} are in config maps: {e['name']}")
         # propagate pod info
         c["env"].extend(pod_info_envs["env"])
+
+
+def extract_set(group: str, template: Dict[str, Any], kind: str) -> None:
+    # print(template["spec"])
+    spec = template["spec"]["template"]
+    extract_pod(group, spec, kind)
 
 
 def extract_volume(group: str, template: Dict[str, Any], kind: str) -> None:
@@ -187,6 +194,9 @@ try:
             elif kind in ["Deployment", "DaemonSet"]:
                 copy_labels(template)
                 extract_set(group, template, kind)
+            elif kind in ["Pod"]:
+                copy_labels(template)
+                extract_pod(group, template, kind)
             elif kind in ["Service"]:
                 copy_labels(template)
             elif kind in ["PersistentVolumeClaim"]:

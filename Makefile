@@ -41,9 +41,9 @@ helm:
 	-rm -r deploy/helm-axies
 	mkdir -p deploy/helm-axies
 	cp deploy/docker-compose.yml deploy/helm-axies.yml
-	cd deploy && kompose convert -f helm-axies.yml -c --with-kompose-annotation=true
-	rm helm-axies.yml
-	python3 deploy/extract_helm_values.py helm-axies
+	cd deploy && kompose convert -f helm-axies.yml -c --with-kompose-annotation=true --controller deployment
+	rm deploy/helm-axies.yml
+	python3 deploy/extract_helm_values.py deploy/helm-axies
 	# render templates to verify
-	helm lint --strict helm-axies
-	helm template helm-axies > /dev/null
+	helm lint --strict deploy/helm-axies
+	helm template deploy/helm-axies > /dev/null

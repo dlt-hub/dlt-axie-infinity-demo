@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  RUN_SLEEP: {{ .Values.envs.extractorEnv.runSleep | quote }}
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: axie-extractor-envs-extractor-env
+  name: envs-extractor-env
