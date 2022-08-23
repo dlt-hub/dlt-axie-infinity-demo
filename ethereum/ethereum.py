@@ -20,7 +20,7 @@ try:
     from web3._utils.rpc_abi import RPC
     from web3.types import LogReceipt, EventData, ABIEvent
 
-    from .eth_source_utils import maybe_load_abis, TABIInfo, ABIFunction
+    from .eth_source_utils import maybe_load_abis, TABIInfo, ABIFunction, DecodingError
     from .eth_source_utils import decode_log, decode_tx, fetch_sig_and_decode_log, fetch_sig_and_decode_tx, maybe_update_abi, prettify_decoded, save_abis
 except ImportError:
     raise MissingDependencyException("Ethereum Source", ["web3"], "Web3 is a all purpose python library to interact with Ethereum-compatible blockchains.")
@@ -89,7 +89,7 @@ def _get_blocks(is_deferred: bool, node_url: str, last_block: int, max_blocks: i
         logger.info(f"requesting block {current_block}")
 
         @defer_iterator
-        @with_retry()
+        @with_retry(max_retries=20)
         def _get_block_deferred(c_b: int) -> List[DictStrAny]:
             # get block
             block_ = [_get_block(w3, c_b, chain_id, supports_batching)]
@@ -98,7 +98,7 @@ def _get_blocks(is_deferred: bool, node_url: str, last_block: int, max_blocks: i
             # return all together
             return block_
 
-        @with_retry()
+        @with_retry(max_retries=20)
         def _get_block_retry(c_b: int) -> DictStrAny:
             return _get_block(w3, c_b, chain_id, supports_batching)
 
@@ -219,10 +219,14 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
             r.raise_for_status()
             receipts.append(r.json())
     for tx_receipt, tx in zip(receipts, transactions):
-        if "result" not in tx_receipt:
-            raise ValueError(tx_receipt)
+        tx_hash = tx["transactionHash"]
+        if tx_receipt.get("result") is None:
+            raise ValueError(f"Receipt for tx {tx_hash.hex()} is empty")
+        old_tx_r = tx_receipt
         tx_receipt = receipt_formatters(tx_receipt["result"])
-        assert tx_receipt["transactionHash"] == tx["transactionHash"]
+        if tx_receipt is None:
+            print(old_tx_r)
+        assert tx_receipt["transactionHash"] == tx_hash
         tx["transactionIndex"] = tx_receipt["transactionIndex"]
         tx["status"] = tx_receipt["status"]
         tx["logs"] = [dict(log) for log in log_formatters(tx_receipt["logs"])]
@@ -237,7 +241,6 @@ def _get_block(w3: Web3, current_block: int, chain_id: int, supports_batching: b
 def _decoded_table_name(contract_name: str, typ_: str, abi_name: str, selector: HexBytes) -> str:
     # many selectors have overloads which would generate identical table names
     # add 1 byte suffix to the table name to reduce that probability sufficiently
-    # TODO: make it a global flag if we add it
     if ADD_OVERLOAD_TABLE_NAME_SUFFIX:
         overload_suffix = "_" + hex(reduce(lambda p, n: p ^ n, selector))[2:]
     else:
@@ -266,18 +269,31 @@ def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[Checksu
             tx_args: DictStrAny = None
             fn_name: str = None
 
+            # note that fallback functions are not decoded
             if tx_abi:
-                tx_args = decode_tx(w3.codec, tx_abi, tx_input[4:])
-                fn_name = tx_abi["name"]
+                try:
+                    tx_args = decode_tx(w3.codec, tx_abi, tx_input[4:])
+                    fn_name = tx_abi["name"]
+                except DecodingError as dec_ex:
+                    if tx["status"] == 1:
+                        # correctly processed transaction must decode
+                        logger.error(f"Tx {tx['transactionHash'].hex()} on {abi_info['name']} could not be decoded")
+                        raise
+                    else:
+                        # reverted transactions may not decode
+                        logger.warning(f"Reverted tx {tx['transactionHash'].hex()} on {abi_info['name']} did not decode: {str(dec_ex)}")
             else:
                 if abi_info["unknown_selectors"].get(selector.hex()) is None:
-                    # try to decode with an api
-                    _, fn_name, tx_args, tx_abi = fetch_sig_and_decode_tx(w3.codec, tx_input)
-                    maybe_update_abi(abi_info, selector, tx_abi, block["blockNumber"])
+                    if tx["status"] == 0:
+                        logger.warning(f"Reverted tx {tx['transactionHash'].hex()} on {abi_info['name']} has unknown signature and will not be decoded")
+                    else:
+                        # try to decode with an api
+                        _, fn_name, tx_args, tx_abi = fetch_sig_and_decode_tx(w3.codec, tx_input)
+                        maybe_update_abi(abi_info, selector, tx_abi, block["blockNumber"])
 
             if tx_args:
                 table_name = _decoded_table_name(abi_info["name"], "call", fn_name, selector)
-                tx_args =  with_table_name(tx_args, table_name)
+                tx_args = with_table_name(tx_args, table_name)
                 # yield arguments with reference to transaction
                 tx_args.update(tx_info)
                 logger.debug(f"Decoded tx {tx['transactionHash'].hex()} to {tx['to']} into {table_name}")
@@ -301,7 +317,7 @@ def _decode_block(w3: Web3, block: StrAny, abi_dir: str, contracts: Dict[Checksu
 
                 if event_data:
                     table_name = _decoded_table_name(abi_info["name"], "logs", event_data["event"], selector)
-                    ev_args =  with_table_name(dict(event_data["args"]), table_name)
+                    ev_args = with_table_name(dict(event_data["args"]), table_name)
                     # yield arguments with reference to transaction and log
                     ev_args.update(tx_info)
                     ev_args.update({

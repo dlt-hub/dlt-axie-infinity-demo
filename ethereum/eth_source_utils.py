@@ -10,14 +10,14 @@ from web3._utils.normalizers import BASE_RETURN_NORMALIZERS
 from web3._utils.events import get_event_data, get_event_abi_types_for_decoding
 from eth_typing import HexStr
 from eth_typing.evm import ChecksumAddress
-from eth_abi.codec import ABIDecoder
+from eth_abi.codec import ABIDecoder, TupleDecoder
 from eth_abi.exceptions import DecodingError
 from eth_abi.grammar import parse as parse_abi_type
 from eth_utils.address import to_checksum_address
 from eth_utils.abi import function_abi_to_4byte_selector, event_abi_to_log_topic
 
 from dlt.common import json, Wei, logger
-from dlt.common.typing import DictStrAny, StrAny
+from dlt.common.typing import DictStrAny
 
 
 class TABIInfo(TypedDict):
@@ -31,7 +31,7 @@ class TABIInfo(TypedDict):
     abi_file: str
     abi: ABI
     unknown_selectors: DictStrAny
-    file_content: StrAny
+    file_content: DictStrAny
     selectors: Dict[HexBytes, ABIElement]
 
 
@@ -45,6 +45,8 @@ def abi_to_selector(abi: ABIElement) -> HexBytes:
         return HexBytes(event_abi_to_log_topic(abi))  # type: ignore
     elif abi["type"] == "function":
         return HexBytes(function_abi_to_4byte_selector(abi))  # type: ignore
+    elif abi["type"] == "fallback":
+        return HexBytes("0x")
     else:
         raise ValueError(abi)
 
@@ -170,10 +172,27 @@ def signature_to_abi(sig_type: str, sig: str) -> ABIElement:
     return abi
 
 
-def decode_tx(codec: ABIDecoder, abi: ABIFunction, params: HexBytes) -> DictStrAny:
+def decode_tx(codec: ABIDecoder, abi: ABIFunction, params: HexBytes, raise_on_outstanding_data: bool = False) -> DictStrAny:
     names = get_abi_input_names(abi)
     types = get_abi_input_types(abi)
-    decoded = codec.decode_abi(types, params)
+
+    def _decode(data: HexBytes) -> Any:
+        # this copies decode_abi method but checks if full stream was consumed
+        decoders = [
+            codec._registry.get_decoder(type_str)
+            for type_str in types
+        ]
+
+        decoder = TupleDecoder(decoders=decoders)
+        stream = codec.stream_class(data)
+
+        decoded = decoder(stream)
+        outstanding_bytes = len(params) - stream.tell()
+        if outstanding_bytes != 0 and raise_on_outstanding_data:
+            raise DecodingError(f"Input stream contains {outstanding_bytes} outstanding bytes that were not decoded")
+        return decoded
+
+    decoded = _decode(params)
     normalized = map_abi_data(BASE_RETURN_NORMALIZERS, types, decoded)
 
     return dict(zip(names, normalized))
@@ -278,21 +297,9 @@ def prettify_decoded(contract: TABIInfo, decoded: DictStrAny, abi: ABIElement, s
     return decoded
 
 
-KNOWN_SELECTORS_DECIMALS = {
-    # Transfer
-    (HexBytes("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"), 2, 2): 18,
-    # Approval
-    (HexBytes("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"), 2, 2): 18,
-    # approve
-    (HexBytes("0x095ea7b3"), 1, 0): 18,
-    # transfer
-    (HexBytes("0xa9059cbb"), 1, 0): 18
-}
-
-
 def uint_to_wei(contract: TABIInfo, decoded: DictStrAny, inputs: Union[Sequence[ABIFunctionParams], Sequence[ABIEventParams]], selector: HexBytes) -> None:
     # converts all integer types > 2**64 into Wei type
-    for idx, input_ in enumerate(inputs):
+    for input_idx, input_ in enumerate(inputs):
 
         def uint_list_to_wei(list_v: List[Any], decimals: int = 0) -> None:
             for jdx, l_v in enumerate(list_v):
@@ -309,27 +316,22 @@ def uint_to_wei(contract: TABIInfo, decoded: DictStrAny, inputs: Union[Sequence[
         if isinstance(val, dict):
             # convert recursively for tuples
             uint_to_wei(contract, val, input_["components"], selector)  # type: ignore
-            return
-        bit_size = 0
-        if parsed_type.base in ["uint", "int"]:
-            bit_size = int(parsed_type.sub)
-        elif parsed_type.base in ["ufixed", "fixed"]:
-            bit_size = int(parsed_type[0])
-        # bigint is signed so we must have 63 bit integer to fit (one bit is sign). in case of signed integers they fit in bigint 1:1
-        if bit_size > 63 and parsed_type.base[0] == "u" or bit_size > 64 and parsed_type.base[0] != "u":
-            # not fitting in int -> convert to wei
-            index_count = 0
-            if len(selector) == 32:
-                index_count = len([arg for arg in inputs if arg.get("indexed") is True])
-            decimals = KNOWN_SELECTORS_DECIMALS.get((selector, idx, index_count), 0)
-            if decimals > 0:
-                decimals = contract.get("decimals", decimals)
-                logger.debug(f"Got decimals {decimals} for token {contract['name']} at {contract['address']}")
-            if parsed_type.is_array:
-                assert isinstance(val, list)
-                uint_list_to_wei(val, decimals)
-            else:
-                decoded[input_["name"]] = Wei.from_int256(val, decimals=decimals)
+        else:
+            # one of the basic types
+            bit_size = 0
+            if parsed_type.base in ["uint", "int"]:
+                bit_size = int(parsed_type.sub)
+            elif parsed_type.base in ["ufixed", "fixed"]:
+                bit_size = int(parsed_type[0])
+            # bigint is signed so we must have 63 bit integer to fit (one bit is sign). in case of signed integers they fit in bigint 1:1
+            if bit_size > 63 and parsed_type.base[0] == "u" or bit_size > 64 and parsed_type.base[0] != "u":
+                # not fitting in int -> convert to wei
+                decimals = _infer_decimals(contract, inputs, selector, input_idx)
+                if parsed_type.is_array:
+                    assert isinstance(val, list)
+                    uint_list_to_wei(val, decimals)
+                else:
+                    decoded[input_["name"]] = Wei.from_int256(val, decimals=decimals)
 
 
 def flatten_batches(decoded: DictStrAny, abi: ABIElement) -> None:
@@ -370,3 +372,31 @@ def recode_tuples(decoded: DictStrAny, abi: ABIElement) -> None:
         decoded_val = decoded.get(input_["name"])
         if input_["type"] == "tuple" and isinstance(decoded_val, Iterable):
             decoded[input_["name"]] = _replace_component(decoded_val, input_["components"])
+
+
+KNOWN_SELECTORS_DECIMALS = {
+    # Transfer
+    (HexBytes("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"), 2, 2): 18,
+    # Approval
+    (HexBytes("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"), 2, 2): 18,
+    # approve
+    (HexBytes("0x095ea7b3"), 1, 0): 18,
+    # transfer
+    (HexBytes("0xa9059cbb"), 1, 0): 18
+}
+
+
+def _infer_decimals(contract: TABIInfo, inputs: Union[Sequence[ABIFunctionParams], Sequence[ABIEventParams]], selector: HexBytes, input_idx: int) -> int:
+    # try to infer decimals from known selectors (ERC20 functions and events) and from known abis
+    index_count = 0
+    if len(selector) == 32:
+        index_count = len([arg for arg in inputs if arg.get("indexed") is True])
+    decimals = KNOWN_SELECTORS_DECIMALS.get((selector, input_idx, index_count), 0)
+    if decimals > 0:
+        # if ERC20 transfer/log is detected try to get correct decimal value from abi
+        decimals = contract.get("decimals", None)
+        if decimals is None:
+            decimals = 18
+            logger.warning(f"Detected ERC20 transfer/approve but contract {contract['name']} ABI has no decimal property specified, using 18 decimals")
+        logger.debug(f"Got decimals {decimals} for token {contract['name']} at {contract['address']}")
+    return decimals
