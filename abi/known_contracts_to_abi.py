@@ -1,7 +1,7 @@
 from eth_utils.address import to_checksum_address
 
 from dlt.common import json
-from examples.sources.eth_source_utils import maybe_load_abis, save_abis, TABIInfo
+from ethereum.eth_source_utils import maybe_load_abis, save_abis, TABIInfo
 
 # load all abis
 abi_dir = "abi/abis"
@@ -22,7 +22,7 @@ for r_c in ronin_known_contracts["pageProps"]["allVerifiedContracts"]:
         content = {
             "should_decode": False
         }
-        contract = {
+        contract = {  # type: ignore
             "file_content": content
         }
         contracts[address] = contract
@@ -32,7 +32,7 @@ for r_c in ronin_known_contracts["pageProps"]["allVerifiedContracts"]:
         content["type"] = r_c["type"]
         # if no abi: set standard abi
         if "abi" not in content:
-            with open(f"experiments/data/ronin/{r_c['type']}.json", "r", encoding="utf-8") as f:
+            with open(f"abi/{r_c['type']}.json", "r", encoding="utf-8") as f:
                 content["abi"] = json.load(f)
     if "decimals" in r_c:
         content["decimals"] = r_c["decimals"]
