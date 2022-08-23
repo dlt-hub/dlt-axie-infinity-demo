@@ -17,3 +17,4 @@ except CannotRestorePipelineException:
     logger.warning("Pipeline could not be restored. Waiting for first extraction....")
 else:
     pipeline.load()
+    pipeline.sleep()

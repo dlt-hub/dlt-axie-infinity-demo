@@ -11,11 +11,10 @@ credentials = get_credentials("bigquery", "axies_2", secrets.get("gcp_credential
 abi_dir = "abi/abis"
 export_schema_path = config.get("export_schema_path")
 rpc_url = "https://api.roninchain.com/rpc"
-max_blocks = 50
+max_blocks = 300
 max_initial_blocks = 10
 
 pipeline = Pipeline("axies")
-
 # create or restore pipeline. this pipeline requires persistent state that is kept in working dir.
 logger.info(f"Running pipeline {pipeline.pipeline_name} in {config['working_dir']} with destination {credentials.CLIENT_TYPE}")
 try:
@@ -27,6 +26,8 @@ except CannotRestorePipelineException:
     max_blocks = max_initial_blocks
 
 i = get_blocks(rpc_url, max_blocks=max_blocks, max_initial_blocks=10, abi_dir=abi_dir, is_poa=True, supports_batching=False, state=pipeline.state)
+# i = get_blocks(rpc_url, max_blocks=1, last_block=16553617, abi_dir=abi_dir, is_poa=True, supports_batching=False, state=None)
 pipeline.extract(i, table_name="blocks")
 pipeline.extract(get_known_contracts(abi_dir), table_name="known_contracts")
 pipeline.normalize()
+pipeline.sleep()

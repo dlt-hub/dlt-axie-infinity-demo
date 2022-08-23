@@ -3,11 +3,11 @@ version: "3.8"
 x-prometheus-port: &prometheus-port
   - "8000"
 
-x-pipeline-image: &pipeline-image scalevector/dlt:1.0.0
+x-pipeline-image: &pipeline-image scalevector/dlt-axie-infinity-demo:1.0.0
 
 services:
   axie-extractor:
-    restart: "no"
+    restart: "always"
     image: *pipeline-image
     labels:
       kompose.controller.type: deployment
@@ -18,18 +18,19 @@ services:
       prometheus.io/path: "/"
       prometheus.io/port: 8000
       dlt.service.type: extractor
-    command: python axies.py
+    command: sh -c 'while python axies.py; do echo "Running....."; done'
     volumes:
       - pipeline_volume:/var/local/pipeline
     ports: *prometheus-port
     env_file:
       - envs/common.env
-      - local/envs/bigquery-credentials.env
+      - envs/extractor.env
+      - envs/bigquery-credentials.env
     secrets:
       - gcp--private-key
 
   axie-loader:
-    restart: "no"
+    restart: "always"
     image: *pipeline-image
     labels:
       kompose.controller.type: deployment
@@ -40,13 +41,14 @@ services:
       prometheus.io/path: "/"
       prometheus.io/port: 8000
       dlt.service.type: loader
-    command: python axies_load.py
+    command: sh -c 'while python axies_load.py; do echo "Running....."; done'
     volumes:
       - pipeline_volume:/var/local/pipeline
     ports: *prometheus-port
     env_file:
       - envs/common.env
-      - local/envs/bigquery-credentials.env
+      - envs/loader.env
+      - envs/bigquery-credentials.env
     secrets:
       - gcp--private-key
 
@@ -55,4 +57,4 @@ volumes:
 
 secrets:
   gcp--private-key:
-    file: local/secrets/gcp--private-key
+    file: secrets/gcp--private-key
