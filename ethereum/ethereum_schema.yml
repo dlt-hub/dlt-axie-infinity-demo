@@ -172,9 +172,6 @@ tables:
       value:
         data_type: wei
         nullable: false
-      eth_value:
-        data_type: decimal
-        nullable: true
     parent: blocks
   blocks__transactions__logs:
     columns:
@@ -316,6 +313,8 @@ settings:
     cluster:
       - block_number
     partition:
+      - block_timestamp
+    sort:
       - block_timestamp
     unique:
     - _dlt_id

@@ -5,7 +5,7 @@ from dlt.pipeline import Pipeline, CannotRestorePipelineException
 from helpers import config, secrets, get_credentials
 
 
-credentials = get_credentials("bigquery", "axies_2", secrets.get("gcp_credentials", {}))
+credentials = get_credentials(config.get("client_type"), config.get("default_dataset"), secrets.get("gcp_credentials", {}))
 
 pipeline = Pipeline("axies")
 

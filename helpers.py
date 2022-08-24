@@ -1,4 +1,3 @@
-from genericpath import isfile
 import os
 import tomlkit
 
@@ -28,6 +27,6 @@ config = _read_toml("config.toml")
 
 def get_credentials(destination: TLoaderType, dataset: str, credentials: StrAny) -> PipelineCredentials:
     full_credentials = {k.upper():v for k,v in credentials.items()}
-    full_credentials["CLIENT_TYPE"] = destination
+    full_credentials["CLIENT_TYPE"] = os.environ.get("CLIENT_TYPE", destination)
     full_credentials["DEFAULT_DATASET"] = dataset
     return credentials_from_dict(full_credentials)

@@ -6,13 +6,15 @@ from ethereum import get_schema,get_blocks, get_known_contracts
 from helpers import config, secrets, get_credentials
 
 
-credentials = get_credentials("bigquery", "axies_2", secrets.get("gcp_credentials", {}))
+credentials = get_credentials(config.get("client_type"), config.get("default_dataset"), secrets.get("credentials", {}))
 
 abi_dir = "abi/abis"
 export_schema_path = config.get("export_schema_path")
 rpc_url = "https://api.roninchain.com/rpc"
-max_blocks = 300
-max_initial_blocks = 10
+
+# number of past blocks to get when pipeline is run for a first time
+max_blocks = config["ethereum"]["max_blocks"]
+max_initial_blocks = config["ethereum"]["max_initial_blocks"]
 
 pipeline = Pipeline("axies")
 # create or restore pipeline. this pipeline requires persistent state that is kept in working dir.
@@ -30,4 +32,8 @@ i = get_blocks(rpc_url, max_blocks=max_blocks, max_initial_blocks=10, abi_dir=ab
 pipeline.extract(i, table_name="blocks")
 pipeline.extract(get_known_contracts(abi_dir), table_name="known_contracts")
 pipeline.normalize()
+
+# if you want to run the whole pipeline in single script just uncomment this line
+# pipeline.load()
+
 pipeline.sleep()
