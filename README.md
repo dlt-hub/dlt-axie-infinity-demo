@@ -129,6 +129,9 @@ Extractor creates the decoded tables as follows:
 5. child tables will be created to accommodate nesting
 6. every such table contains data that allow to link it to corresponding `block_transactions` or `blocks__transactions__logs` via PKs.
 
+#### Known Contracts
+Ethereum Extractor provides an internal resource with the data on all known contract (address, name, interfaces implemented - depending on ABI provided). Pipeline is passing this to `known_contracts` table with each run replacing the old data.
+
 #### Propagated Hints
 
 * `block_timestamp` is propagated to **all** the tables and used to create daily partitions (if warehouse supports that). It is also used to create sorting (or non-unique indexes)
