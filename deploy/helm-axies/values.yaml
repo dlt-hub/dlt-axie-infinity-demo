@@ -5,6 +5,7 @@ envs:
     gcpProjectId: set-me-up
     gcpRetryDeadline: '300.0'
   commonEnv:
+    clientType: bigquery
     defaultDataset: axies_1_q
     isDevelopmentConfig: 'False'
     logLevel: DEBUG
@@ -14,6 +15,11 @@ envs:
     runSleep: '30.0'
   loaderEnv:
     runSleep: '1'
+  redshiftCredentialsEnv:
+    pgDbname: set-me-up
+    pgHost: set-me-up
+    pgPassword: set-me-up
+    pgUser: set-me-up
 images:
   pipelineImage: scalevector/dlt-axie-infinity-demo:1.0.0
 nodeSelector: {}
@@ -24,6 +30,7 @@ pods:
     terminationGracePeriodSeconds: 320
 secrets:
   gcpPrivateKey: set-me-up
+  pgPassword: ''
 volumes:
   accessModes:
   - ReadWriteOnce

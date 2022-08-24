@@ -1,2 +1,7 @@
 # this is production config
+
 working_dir="/var/local/pipeline"
+
+[ethereum]
+max_initial_blocks=10
+max_blocks=300

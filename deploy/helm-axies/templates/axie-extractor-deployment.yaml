@@ -48,6 +48,11 @@ spec:
         - -c
         - while python axies.py; do echo "Running....."; done
         env:
+        - name: CLIENT_TYPE
+          valueFrom:
+            configMapKeyRef:
+              key: CLIENT_TYPE
+              name: envs-common-env
         - name: DEFAULT_DATASET
           valueFrom:
             configMapKeyRef:
@@ -83,6 +88,26 @@ spec:
             configMapKeyRef:
               key: LOG_LEVEL
               name: envs-common-env
+        - name: PG__DBNAME
+          valueFrom:
+            configMapKeyRef:
+              key: PG__DBNAME
+              name: envs-redshift-credentials-env
+        - name: PG__HOST
+          valueFrom:
+            configMapKeyRef:
+              key: PG__HOST
+              name: envs-redshift-credentials-env
+        - name: PG__PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: PG__PASSWORD
+              name: envs-redshift-credentials-env
+        - name: PG__USER
+          valueFrom:
+            configMapKeyRef:
+              key: PG__USER
+              name: envs-redshift-credentials-env
         - name: PROMETHEUS_PORT
           valueFrom:
             configMapKeyRef:
@@ -119,6 +144,8 @@ spec:
         volumeMounts:
         - mountPath: /run/secrets/gcp--private-key
           name: gcp--private-key
+        - mountPath: /run/secrets/pg--password
+          name: pg--password
         - mountPath: /var/local/pipeline
           name: pipeline-volume
       nodeSelector: 
@@ -133,6 +160,12 @@ spec:
           - key: gcp--private-key
             path: gcp--private-key
           secretName: gcp--private-key
+      - name: pg--password
+        secret:
+          items:
+          - key: pg--password
+            path: pg--password
+          secretName: pg--password
       - name: pipeline-volume
         persistentVolumeClaim:
           claimName: pipeline-volume

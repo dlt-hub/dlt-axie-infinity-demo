@@ -26,8 +26,10 @@ services:
       - envs/common.env
       - envs/extractor.env
       - envs/bigquery-credentials.env
+      - envs/redshift-credentials.env
     secrets:
       - gcp--private-key
+      - pg--password
 
   axie-loader:
     restart: "always"
@@ -49,8 +51,10 @@ services:
       - envs/common.env
       - envs/loader.env
       - envs/bigquery-credentials.env
+      - envs/redshift-credentials.env
     secrets:
       - gcp--private-key
+      - pg--password
 
 volumes:
   pipeline_volume:
@@ -58,3 +62,5 @@ volumes:
 secrets:
   gcp--private-key:
     file: secrets/gcp--private-key
+  pg--password:
+    file: secrets/pg--password
