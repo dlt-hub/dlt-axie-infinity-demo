@@ -28,18 +28,18 @@ In `config.toml` you can change:
 In `secrets.toml` you should provide BigQuery or Redshift credentials, depending on your configuration. For BigQuery take the following from `services.json`
 ```toml
 [credentials]
-client_email = <client_email from services.json>
-private_key = <private_key from services.json>
-project_id = <project_id from services json>
+client_email = "<client_email from services.json>"
+private_key = "<private_key from services.json>"
+project_id = "<project_id from services json>"
 ```
 
 For Redshift provide details from your connection string
 ```toml
 [credentials]
-dbname=<database name>
-host=<ip or host name>
-user=<database user name>
-password=<password>
+dbname="<database name>"
+host="<ip or host name>"
+user="<database user name>"
+password="<password>"
 ```
 
 ### Running locally
@@ -51,7 +51,6 @@ You can run the pipeline with Docker Composer or on Kubernetes with Helm. Please
 Pipeline is configured via production `config.toml` and environment vars (which override any hardcoded and config values.). Credentials from `secrets.toml` are not deployed. A native way using docker/kube secrets is used.
 
 Both deployments will run `axies.py` and `axies_load.py` continuously. You can configure the run sleep (which is quite short as Ronin is producing a block every few seconds)
-
 
 
 For Docker Composer
@@ -108,6 +107,12 @@ Pipeline provides basic monitoring.
 4. Containers are tagged with DLT and Pipeline versions, commit hash and kubernetes deployment details.
 
 ## Ethereum Source Extractor
+This extractor reads data block by block, gets the transaction receipts and log data and yields those as single, nested dictionaries. The returned data uses the same
+names and data types as returned by `Web3` Python library, just with `AttributeDict`s converted to regular dictionaries.
+
+It is able to decode transaction input data and transaction logs if provided for the requested contracts. If ABI for the contract is not known, it will try to figure that out by resolving selector via online signature databases.
+
+Extractor may be parametrized to run in parallel on many block ranges or, if `pipeline.state` is provided, it may be used to yield only new blocks produced by the network between subsequent runs.
 
 ### Data Store Schema
 The data store schema corresponds to the structure of the Ethereum blockchain data. Each X seconds a new **block** is created which contains a list of **transactions**. Transactions may succeed or revert. If transaction succeeds it may generate a list of **logs** which are a kind of programmable execution trace. Transactions are executed by an **account** (which is just a long number) against other **account**. Accounts may belong to people or smart contracts.
@@ -139,7 +144,65 @@ Ethereum Extractor provides an internal resource with the data on all known cont
 
 
 ### Using the extractor
+Extractor should be used by calling the following methods:
+1. `get_schema` to get basic Ethereum schema to configure pipeline
+2. `get_blocks` to get iterator with block data
+3. `get_known_contracts` to get iterator with known contracts
 
 ### Decoding and ABIs
+As mentioned, extractor will decode transaction inputs and logs of requested smart contracts. Decoding is requested via a file where file name is a smart contract address and content contains some basic metadata and (optionally) ABI. The minimal required information on the contract:
+```json
+{
+    "name": "Axie Contract",
+    "abi": []
+}
+```
 
-### Non-Suitability for financial reporting
+In case of empty or partial ABI, function and log signatures will be inferred as follows:
+1. For unknown selector, the `sig.eth.samczsun.com` is queried for a signature
+2. Signature is converted to ABI with default names of all parameters
+3. In case of log event signatures, the correct index information is inferred by finding an index combination that decodes given set of topics and data
+4. **A file with ABI will be modified** to store new ABI element or information on unknown selectors that could not be decoded.
+
+See `ethereum/eth_source_utils.py` for some cool utils that do the above.
+
+#### Decoding token amounts
+If one of the selectors belonging to ERC20 ABI is detected, the associated amount is scaled to required decimals.
+1. Smart contract file is queried for `decimals` field and that value is used to scale the amount 
+2. The standard 18 decimals are used otherwise
+
+See example of full smart contract metadata below:
+```json
+{
+  "name": "Axie Infinity Shard Contract",
+  "unknown_selectors": {},
+  "type": "ERC20",
+  "decimals": 18,
+  "token_name": "Axie Infinity Shard",
+  "token_symbol": "AXS"
+}
+```
+
+### Demo non-Suitability for financial reporting
+We've made a lot of effort to represent 256bit EVM values correctly across different destination. DLT has a special `wei` type built-in that uses automatically the highest decimal precision offered by a particular destination. **However the only database we know of, that is capable of storing the EVM numbers is Postgres**.
+1. Redshift has 128 bit decimals
+2. BigQuery has (probably) 256bit decimals but only 128bit can be used to store integers, the other 128bit stores decimal values.
+
+The basic Ethereum schema will convert all the wei values to double precision floats. This makes aggregate, non-financial reporting easy. 
+```yaml
+normalizers:
+  names: dlt.common.normalizers.names.snake_case
+  detections:
+    - timestamp
+    - large_integer
+    - hexbytes_to_text
+    - wei_to_double
+```
+
+To get the exact data suitable for financial reporting remove `wei_to_double` detection and use the BigQuery destination. In this case we are able to store most of the values in `BIGDECIMAL` type, out of range values are stored as text in separate columns (if you want to contribute Postgres destination, here's where to start: https://github.com/scale-vector/dlt/tree/master/dlt/load/redshift)
+
+### TODOs
+* Take the ABIs from Etherscan or other block explorers
+* Implement log-only extractor to scan full logs of configured smart contracts
+* Provide a set of Python transformation to strip less used block and transactions data
+* Provide an option to remove transactions from unknown contracts

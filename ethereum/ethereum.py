@@ -25,13 +25,6 @@ try:
 except ImportError:
     raise MissingDependencyException("Ethereum Source", ["web3"], "Web3 is a all purpose python library to interact with Ethereum-compatible blockchains.")
 
-# this source gets full state of any Ethereum compatible blockchain.
-# - can be easily scaled up to hundreds of parallel extractions (ie. via Airflow)
-# - supports retrying if node fails
-# - supports multi threaded extraction on single machine via get_deferred_source
-# - supports pipeline state so it may be used to just get new blocks when they are available
-# - the return value is iterator (or deferred iterator) so still mappings may be used (ie. to decode transactions and logs), see example
-
 
 HTTP_PROVIDER_HEADERS = {
         "Content-Type": "application/json",
@@ -42,13 +35,34 @@ ADD_OVERLOAD_TABLE_NAME_SUFFIX = False
 
 
 def get_schema() -> Schema:
-    # all Ethereum compatible blockchains have the same schema so we just provide a nice yaml file
+    """Returns a basic Ethereum schema defining `blocks` and `known_contracts` tables and their child tables. Basic schema does not include any tables for decoded data.
+
+    Returns:
+        Schema: basic Ethereum schema object
+    """
     return Pipeline.load_schema_from_file("ethereum/ethereum_schema.yml")
 
 
 def get_blocks(
     node_url: str, last_block: int = None, max_blocks: int = None, max_initial_blocks: int = None, abi_dir: str = None, lag: int = 2, is_poa: bool = False, supports_batching: bool = True, state: DictStrAny = None
     ) -> Iterator[DictStrAny]:
+    """Returns an iterator with Ethereum block data, transactions with receipts and associated logs. If requested, transaction calls and log data are decoded and returned
+    as well. 
+
+    Args:
+        node_url (str): Url of the JSON RPC node
+        last_block (int, optional): Highest block number to be returned. If None, the last available block number will be used.
+        max_blocks (int, optional): How many past blocks to return. If None, then all blocks will be returned.
+        max_initial_blocks (int, optional): How many past blocks to return if pipeline is run with state option for a first time. If None, then `max_blocks` are used.
+        abi_dir (str, optional): Directory with ABIs of known contracts that may be decoded. If None, no contracts will be decoded.
+        lag (int, optional): when `last_block` is None, skips `lag` most recent blocks to protect against network reorgs. Defaults to 2.
+        is_poa (bool, optional): Must be True for Proof of Authority networks. Defaults to False.
+        supports_batching (bool, optional): Tells if JSON RPC node supports batch requests. Defaults to True.
+        state (DictStrAny, optional): If pipeline state is passed, it will be used to hold last returned block. On subsequent runs, yielding will restart from that block. Defaults to None.
+
+    Yields:
+        Iterator[DictStrAny]: Blocks and decoded transactions.
+    """
     return _get_blocks(False, node_url, last_block, max_blocks, max_initial_blocks, abi_dir, lag, is_poa, supports_batching, state)  # type: ignore
 
 
@@ -59,7 +73,14 @@ def get_blocks_deferred(
 
 
 def get_known_contracts(abi_dir: str) -> Iterator[DictStrAny]:
-    # load abis and return as tables
+    """Returns iterator with information on known contracts
+
+    Args:
+        abi_dir (str): Directory with ABIs of known contracts
+
+    Yields:
+        Iterator[DictStrAny]: All known contracts in `abi_dir`
+    """
     contracts = maybe_load_abis(abi_dir, only_for_decode=False)
     for contract in contracts.values():
         # fields to yield
