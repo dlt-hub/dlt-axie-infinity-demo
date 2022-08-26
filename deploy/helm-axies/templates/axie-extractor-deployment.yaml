@@ -44,9 +44,8 @@ spec:
     spec:
       containers:
       - args:
-        - sh
-        - -c
-        - while python axies.py; do echo "Running....."; done
+        - python
+        - axies.py
         env:
         - name: CLIENT_TYPE
           valueFrom:
@@ -57,6 +56,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: DEFAULT_DATASET
+              name: envs-common-env
+        - name: EXIT_ON_EXCEPTION
+          valueFrom:
+            configMapKeyRef:
+              key: EXIT_ON_EXCEPTION
               name: envs-common-env
         - name: GCP__CLIENT_EMAIL
           valueFrom:
@@ -82,6 +86,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: IS_DEVELOPMENT_CONFIG
+              name: envs-common-env
+        - name: IS_SINGLE_RUN
+          valueFrom:
+            configMapKeyRef:
+              key: IS_SINGLE_RUN
               name: envs-common-env
         - name: LOG_LEVEL
           valueFrom:

@@ -18,7 +18,7 @@ services:
       prometheus.io/path: "/"
       prometheus.io/port: 8000
       dlt.service.type: extractor
-    command: sh -c 'while python axies.py; do echo "Running....."; done'
+    command: python axies.py
     volumes:
       - pipeline_volume:/var/local/pipeline
     ports: *prometheus-port
@@ -43,7 +43,7 @@ services:
       prometheus.io/path: "/"
       prometheus.io/port: 8000
       dlt.service.type: loader
-    command: sh -c 'while python axies_load.py; do echo "Running....."; done'
+    command: python axies_load.py
     volumes:
       - pipeline_volume:/var/local/pipeline
     ports: *prometheus-port

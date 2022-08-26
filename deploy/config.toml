@@ -1,6 +1,6 @@
 # this is production config
-
 working_dir="/var/local/pipeline"
+import_schema_path="."
 
 [ethereum]
 max_initial_blocks=10

@@ -28,3 +28,4 @@ COPY deploy/config.toml .dlt/
 ADD abi/abis abi/abis
 ADD ethereum ethereum
 COPY *.py ./
+COPY axies_schema.yaml .

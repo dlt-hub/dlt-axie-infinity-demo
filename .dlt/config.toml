@@ -4,8 +4,10 @@ client_type="bigquery"
 default_dataset="axies_1_local"
 # where to keep pipeline state and working files
 working_dir="data/pipeline"
+# where to take initial axies schema from
+import_schema_path="."
 # where to export current schema when any new tables/columns are added
-export_schema_path="schemas"
+export_schema_path="schema_export"
 
 [ethereum]
 # number of past blocks to get when pipeline is run for a first time

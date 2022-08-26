@@ -2,7 +2,9 @@ apiVersion: v1
 data:
   CLIENT_TYPE: {{ .Values.envs.commonEnv.clientType | quote }}
   DEFAULT_DATASET: {{ .Values.envs.commonEnv.defaultDataset | quote }}
+  EXIT_ON_EXCEPTION: {{ .Values.envs.commonEnv.exitOnException | quote }}
   IS_DEVELOPMENT_CONFIG: {{ .Values.envs.commonEnv.isDevelopmentConfig | quote }}
+  IS_SINGLE_RUN: {{ .Values.envs.commonEnv.isSingleRun | quote }}
   LOG_LEVEL: {{ .Values.envs.commonEnv.logLevel | quote }}
   PROMETHEUS_PORT: {{ .Values.envs.commonEnv.prometheusPort | quote }}
   SENTRY_DSN: {{ .Values.envs.commonEnv.sentryDsn | quote }}

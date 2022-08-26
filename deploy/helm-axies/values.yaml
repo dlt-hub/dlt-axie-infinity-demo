@@ -6,8 +6,10 @@ envs:
     gcpRetryDeadline: '300.0'
   commonEnv:
     clientType: bigquery
-    defaultDataset: axies_1_q
+    defaultDataset: axies_1
+    exitOnException: 'False'
     isDevelopmentConfig: 'False'
+    isSingleRun: 'False'
     logLevel: DEBUG
     prometheusPort: '8000'
     sentryDsn: ''
