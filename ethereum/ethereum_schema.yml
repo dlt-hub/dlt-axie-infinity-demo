@@ -325,7 +325,6 @@ normalizers:
     - timestamp
     - large_integer
     - hexbytes_to_text
-    - wei_to_double
   json:
     module: dlt.common.normalizers.json.relational
     config:
