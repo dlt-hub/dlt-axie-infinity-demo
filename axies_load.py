@@ -18,5 +18,4 @@ try:
 except CannotRestorePipelineException:
     logger.warning("Pipeline could not be restored. Waiting for some data to be extracted")
 else:
-    pipeline.load()
-    pipeline.sleep()
+    exit(pipeline.load(max_parallel_loads=60))
