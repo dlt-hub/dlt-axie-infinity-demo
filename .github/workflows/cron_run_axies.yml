@@ -1,7 +1,7 @@
 name: Run Axies pipeline with cron
 on:
-  # schedule:
-  #   - cron: '*/3 * * * *'
+  schedule:
+    - cron: '*/3 * * * *'
   workflow_dispatch:
 
 env:
