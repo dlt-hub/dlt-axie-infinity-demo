@@ -11,7 +11,7 @@ env:
   DEFAULT_DATASET: axies_github_1
 
 jobs:
-  build:
+  get_axie_data:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,7 @@ jobs:
         uses: jorgebg/stateful-action@v0.3
         with:
           branch: pipeline
-          backups: 2
+          backup: 2
 
       - name: Run Axies Pipeline
         run: python axies.py && python axies_load.py
