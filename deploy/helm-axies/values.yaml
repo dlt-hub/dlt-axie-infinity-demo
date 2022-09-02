@@ -14,9 +14,11 @@ envs:
     prometheusPort: '8000'
     sentryDsn: ''
   extractorEnv:
-    runSleep: '30.0'
+    runSleep: '60.0'
+    runSleepIdle: '60.0'
   loaderEnv:
     runSleep: '1'
+    runSleepIdle: '1'
   redshiftCredentialsEnv:
     pgDbname: set-me-up
     pgHost: set-me-up

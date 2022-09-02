@@ -1,6 +1,7 @@
 apiVersion: v1
 data:
   RUN_SLEEP: {{ .Values.envs.loaderEnv.runSleep | quote }}
+  RUN_SLEEP_IDLE: {{ .Values.envs.loaderEnv.runSleepIdle | quote }}
 kind: ConfigMap
 metadata:
   creationTimestamp: null

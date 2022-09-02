@@ -49,6 +49,10 @@ def get_blocks(
     """Returns an iterator with Ethereum block data, transactions with receipts and associated logs. If requested, transaction calls and log data are decoded and returned
     as well. 
 
+    The iteration starts with the **highest** block and proceeds in decreasing order. If `max_blocks` are specified and extractor uses pipeline state to continue from last
+    processed block, and the number of blocks between the last processed block and the highest block is higher than `max_blocks`, the oldest blocks that do not fit in `max_blocks`
+    will be skipped.
+
     Args:
         node_url (str): Url of the JSON RPC node
         last_block (int, optional): Highest block number to be returned. If None, the last available block number will be used.

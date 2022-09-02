@@ -127,6 +127,11 @@ spec:
             configMapKeyRef:
               key: RUN_SLEEP
               name: envs-extractor-env
+        - name: RUN_SLEEP_IDLE
+          valueFrom:
+            configMapKeyRef:
+              key: RUN_SLEEP_IDLE
+              name: envs-extractor-env
         - name: SENTRY_DSN
           valueFrom:
             configMapKeyRef:
