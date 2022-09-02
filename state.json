@@ -1,1 +1,1 @@
-{"pipeline_name": "axies", "loader_client_type": "bigquery", "loader_schema_prefix": "axies_1_local", "default_schema_name": "axies", "ethereum_current_block": 16837261}
+{"pipeline_name": "axies", "loader_client_type": "bigquery", "loader_schema_prefix": "axies_1_local", "default_schema_name": "axies", "ethereum_current_block": 16837461}
