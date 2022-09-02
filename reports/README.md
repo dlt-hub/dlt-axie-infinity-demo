@@ -1,7 +1,13 @@
 # Axie Contract
 
+See some reports here:
+https://datastudio.google.com/reporting/500668de-c442-40b9-9589-8d6e321f4c13
+
 game mechanics:
 https://medium.com/axie-infinity/axie-infinity-breeding-system-walkthrough-ec55939a7ca6
+
+axie types:
+https://afkgaming.com/blockchaingames/guide/the-axie-infinity-collectors-guide
 
 This contract combines ERC721 token contract and Axie breeding logic. What is important in the contract
 1. log of token transfers in `axie_contract_logs_transfer` (from, to, token_id). Warning: _from == 0x0000000000000000000000000000000000000000 means that axie was created not transferred_
@@ -20,7 +26,7 @@ Reports ideas:
 3. number of spawned axie eggs 
 4. number of eggs hatched.
 5. (we could do daily breed count distribution report from that - how many Axies got to which breed count, how many axies reached level 7, daily, last week)
-6. AXS and SLP fees paid to breed axies (https://explorer.roninchain.com/tx/0x55221e82e16a480095cc16ac743023a725815b78a21fa41e0711f6606db47f8d - join TX hash with relevant SXP and SLP logs)
+6. AXS and SLP fees paid to breed axies (https://explorer.roninchain.com/tx/0x55221e82e16a480095cc16ac743023a725815b78a21fa41e0711f6606db47f8d - take transaction hash (_tx_address) from `axie_contract_logs_axiegg_spawned` join TX hash with relevant SXP and SLP transfer logs)
 7. bridge activity
 deposit:
 ```sql

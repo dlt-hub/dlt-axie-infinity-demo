@@ -71,7 +71,28 @@ password="<password>"
 ### Running locally
 Just run the scripts with Python. `axies.py` goes first ;> It will take first 10 blocks from the Ronin Network, decode them and prepare load packages. Then use `axies_load.py` to load them into your warehouse.
 
-### Deployment
+### Running in Github Workflow
+Included github workflow will run the pipeline with defined cron schedule and with the settings in `.dlt` folder. The credentials should be passed to the workflow `cron_run_axies.yml` as follows
+```yml
+env:
+  GCP__PROJECT_ID: axies-ronin-pipeline
+  GCP__CLIENT_EMAIL: loader@axies-ronin-pipeline.iam.gserviceaccount.com
+  GCP__PRIVATE_KEY: ${{ secrets.GCP__PRIVATE_KEY }}
+  DEFAULT_DATASET: axies_github_1
+```
+`DEFAULT_DATASET` may be used to override `default_dataset` setting in config. We also pass the `GCP__PRIVATE_KEY` via Github repository secrets.
+
+You set the schedule as follows
+```yaml
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+```
+however any schedule with resolution below 10 minutes is run unreliably and 5 minutes is official minimum with which effectively your task is run each 10 minutes anyway
+
+Included workflow preserves pipeline state as described here: https://github.com/jorgebg/stateful-action. The state is saved in `pipeline` branch. Check it out: you can find failed packages there as well (if any!)
+
+### Running with Composer or Helm
 You can run the pipeline with Docker Composer or on Kubernetes with Helm. Please take a look into `deploy` folder.
 
 Pipeline is configured via production `config.toml` and environment vars (which override any hardcoded and config values.). Credentials from `secrets.toml` are not deployed. A native way using docker/kube secrets is used.
