@@ -11,7 +11,22 @@ env:
   DEFAULT_DATASET: axies_github_1
 
 jobs:
+  maybe_skip:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v4
+        with:
+          concurrent_skipping: 'always'
+          skip_after_successful_duplicate: 'false'
+          do_not_skip: '[]'
+
   get_axie_data:
+    needs: maybe_skip
+    if: ${{ needs.maybe_skip.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
