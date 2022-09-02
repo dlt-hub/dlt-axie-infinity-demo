@@ -1,0 +1,2 @@
+python-dlt==0.1.0rc13[gcp,redshift]
+web3==5.30.0

@@ -3,7 +3,7 @@
 _gen_requirements*.txt
 _secrets/
 secrets.toml
-data
+.pipeline
 deploy/local
 
 # Byte-compiled / optimized / DLL files
