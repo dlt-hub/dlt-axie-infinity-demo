@@ -1182,6 +1182,29 @@
       ],
       "outputs": [],
       "anonymous": false
+    },
+    {
+      "name": "batchMintAxies",
+      "type": "function",
+      "inputs": [
+        {
+          "name": "_ids",
+          "type": "uint256[]"
+        },
+        {
+          "name": "_packages",
+          "type": "bytes[]"
+        },
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "outputs": [],
+      "_dlt_meta": {
+        "selector": "0x5b43cfca",
+        "block": 17084641
+      }
     }
   ],
   "unknown_selectors": {},

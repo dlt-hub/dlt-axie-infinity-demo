@@ -1,3 +1,4 @@
+from copy import deepcopy
 import pytest
 from web3 import Web3
 from eth_typing.evm import ChecksumAddress
@@ -7,7 +8,7 @@ from typing import cast, List
 from dlt.common import Wei
 from dlt.common.typing import StrAny
 
-from ethereum.eth_source_utils import uint_to_wei, _infer_decimals, maybe_load_abis, decode_tx, ABIFunction, ABIElement, DecodingError, TABIInfo
+from ethereum.eth_source_utils import uint_to_wei, _infer_decimals, maybe_load_abis, decode_tx, ABIFunction, ABIElement, DecodingError, TABIInfo, flatten_batches
 
 
 def test_uint_to_wei_tuples() -> None:
@@ -187,3 +188,85 @@ def test_spoofed_tx_decode() -> None:
     tx_i = HexBytes("0x000000000000000000000000a1ff30a2448536712c68fea0d74198ac13f7d2900000000000000000000000000000000000000000000000000000000000000003F")
     with pytest.raises(DecodingError):
         decode_tx(w3.codec, tx_abi, tx_i)
+
+  
+def test_flatten_batches() -> None:
+  decoded = {
+    "_dlt_meta": {
+    "table_name": 'Axie Contract_call_batchMintAxies'
+    }, 
+    "_tx_address": '0x32950db2a7164aE833121501C797D79E7B79d74C', 
+    "_tx_status": 1, 
+    "blockNumber": 17084641, 
+    "blockTimestamp": 1662878449, 
+    "param_0": [
+      Wei('19208'), 
+      Wei('96566'), 
+      Wei('147036')
+    ], 
+    "param_1": [
+      b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00:<\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x003m\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\\ (\xd3\x00\x00\x00\x00\x00\x00\x01\x00\x01\xc0\x80\xd0\xc2\x10\x00\x00\x00\x01\x00\x08\x10\x80\x83\x02\x00\x01\x00\x00\x10 \x82\x04\x00\x01\x00\x0c', 
+      b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\t\x89\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\\\xe9\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00]\x95s\x93\x00\x00\x00\x00\x00\x00\x01\x00\x02\xc1\xc0\x80\x82\x04\x00\x00\x00\x01\x00\x10 \x01E\x04\x00\x01\x00\x14\x08A\x05\n\x00\x01\x00\x08', 
+      b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x16\xad\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\xcf\x87\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00^\x9f\x9c\xaf\x00\x00\x00\x00\x00\x00\x01\x00\x00\x81\x00\x00\x83\x10\x00\x00\x00\x01\x00\x14\x10!\x01\x08\x00\x01\x00\x0c\x08\x80\x83\x08'
+    ], 
+    "param_2": '0xb0aa40093B8994cFCd1d425e85C7484eDdbd0F63', 
+    "transactionHash": HexBytes('0x4fcc884b8182c159328043e4dd0dcbe1ed4a44cfcdacd54369b8e0396d40f66c'), 
+    "transactionIndex": 4
+  }
+  abi = {
+    "_dlt_meta": {
+    "block": 17084641, 
+    "selector": '0x5b43cfca'
+    }, 
+    "inputs": [
+      {
+      "name": 'param_0', 
+      "type": 'uint256[]'
+      }, 
+      {
+      "name": 'param_1', 
+      "type": 'bytes[]'
+      }, 
+      {
+      "name": 'param_2', 
+      type: 'address'
+      }
+    ], 
+    "name": 'batchMintAxies', 
+    "outputs": [], 
+    "type": 'function'
+  }
+
+  batch_decoded = deepcopy(decoded)
+  flatten_batches(batch_decoded, abi)
+  # could not be converted to batch (param_2 not a list)
+  assert batch_decoded == decoded
+
+  # mod so can be flattened
+  mod_decoded = deepcopy(decoded)
+  mod_decoded["param_2"] = ["a", "b", "c"]
+  batch_decoded = deepcopy(mod_decoded)
+  flatten_batches(batch_decoded, abi)
+  assert "batch" in batch_decoded
+  for i, batch in enumerate(batch_decoded["batch"]):
+    assert batch["param_0"] == mod_decoded["param_0"][i]
+    assert batch["param_1"] == mod_decoded["param_1"][i]
+    assert batch["param_2"] == mod_decoded["param_2"][i]
+
+  # if batch is present, do not overwrite
+  batch_decoded = deepcopy(mod_decoded)
+  batch_decoded["batch"] = ["a", "b", "c"]
+  flatten_batches(batch_decoded, abi)
+  assert batch_decoded["batch"] == ["a", "b", "c"]
+
+  # mod so cannot be flattened due to not equal length
+  batch_decoded = deepcopy(mod_decoded)
+  batch_decoded["param_1"].pop()
+  flatten_batches(batch_decoded, abi)
+  assert "batch" not in batch_decoded
+
+  # if param_3 is string but same length as param_0 list, then it could be decoded into batch but should not
+  batch_decoded = deepcopy(decoded)
+  batch_decoded["param_2"] = "abc"
+  flatten_batches(batch_decoded, abi)
+  assert "batch" not in batch_decoded

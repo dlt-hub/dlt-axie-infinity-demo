@@ -336,11 +336,16 @@ def uint_to_wei(contract: TABIInfo, decoded: DictStrAny, inputs: Union[Sequence[
 
 def flatten_batches(decoded: DictStrAny, abi: ABIElement) -> None:
     batch = []
+    prev_len: int = None
+
+    # do not flatten if batch element already present
+    if "batch" in decoded:
+        return
+
     for input_ in abi["inputs"]:
-        prev_len: int = None
         decoded_val = decoded.get(input_["name"])
         if decoded_val is not None:
-            if isinstance(decoded_val, Sequence):
+            if isinstance(decoded_val, List):
                 if prev_len is None or prev_len == len(decoded_val):
                     batch.append(input_["name"])
                     prev_len = len(decoded_val)
