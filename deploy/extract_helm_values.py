@@ -90,14 +90,14 @@ def extract_cfmap(cfmap: str, template: Dict[str, Any], kind: str) -> None:
 def copy_labels_metadata(metadata: Dict[str, Dict[str, str]]) -> None:
     a_labels: Dict[str, str] = {}
     if "annotations" in metadata:
-        a_labels = {k:v for k, v in metadata["annotations"].items() if k.startswith("autopoiesis.")}
+        a_labels = {k:v for k, v in metadata["annotations"].items() if k.startswith("dlt.")}
     if len(a_labels) > 0:
         labels = metadata.setdefault("labels")
         labels.update(a_labels)
 
 
 def copy_labels(template: Dict[str, Any]) -> None:
-    # copy autopoiesis annotation to labels
+    # copy dlt annotation to labels
     copy_labels_metadata(template["metadata"])
     if "template" in template["spec"]:
         copy_labels_metadata(template["spec"]["template"]["metadata"])
@@ -205,7 +205,7 @@ try:
                 raise Exception(f"Don't know how to process {kind} in {file}")
         serialized = yaml.dump(template, indent=2)
         serialized = re.sub(r"'([\s\n]*?{{.+?}})'",
-                            r"\1",
+                            r"",
                             serialized,
                             flags=re.DOTALL)
         # print(serialized)

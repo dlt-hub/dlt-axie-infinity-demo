@@ -1,7 +1,7 @@
 # type of the destination: `redshift` or `bigquery`
 client_type="bigquery"
 # dataset/schema name in the destination database where tables will be created
-default_dataset="axies_1_local"
+default_dataset="axies_1"
 # where to keep pipeline state and working files
 working_dir=".pipeline"
 # where to take initial axies schema from

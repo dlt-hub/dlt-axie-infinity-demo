@@ -1,5 +1,5 @@
-version: 15
-version_hash: mH+aMAKHyT0J1LrBxpvmM5zqihuFFSFEvEKxEz1lGtk=
+version: 14
+version_hash: D7GGRSymwZw79PLUB/XqM1aauVJpP991aXL/Yjqd4k0=
 engine_version: 4
 name: axies
 tables:
@@ -317,18 +317,6 @@ tables:
         unique: true
         data_type: text
         nullable: false
-      type:
-        data_type: text
-        nullable: true
-      decimals:
-        data_type: bigint
-        nullable: true
-      token_name:
-        data_type: text
-        nullable: true
-      token_symbol:
-        data_type: text
-        nullable: true
     write_disposition: replace
   axie_contract_call_safe_transfer_from:
     columns:
@@ -413,206 +401,6 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  smooth_love_potion_contract_logs_transfer:
-    columns:
-      _from:
-        data_type: text
-        nullable: true
-      _to:
-        data_type: text
-        nullable: true
-      _value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  ronin_weth_contract_call_approve:
-    columns:
-      guy:
-        data_type: text
-        nullable: true
-      wad:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  ronin_weth_contract_logs_approval:
-    columns:
-      src:
-        data_type: text
-        nullable: true
-      guy:
-        data_type: text
-        nullable: true
-      wad:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axs_staking_pool_contract_call_unstake:
-    columns:
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  staking_manager_contract_logs_pool_synced:
-    columns:
-      _pool:
-        data_type: text
-        nullable: true
-      _accumulated_per_share:
-        data_type: double
-        nullable: true
-      _last_synced_block:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
   axie_infinity_shard_contract_logs_transfer:
     columns:
       _from:
@@ -622,98 +410,6 @@ tables:
         data_type: text
         nullable: true
       _value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axs_staking_pool_contract_logs_unstaked:
-    columns:
-      _user:
-        data_type: text
-        nullable: true
-      _token:
-        data_type: text
-        nullable: true
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  staking_manager_contract_logs_user_reward_updated:
-    columns:
-      _pool:
-        data_type: text
-        nullable: true
-      _user:
-        data_type: text
-        nullable: true
-      _reward_info__debited_rewards:
-        data_type: double
-        nullable: true
-      _reward_info__credited_rewards:
-        data_type: double
-        nullable: true
-      _reward_info__last_claimed_block:
         data_type: double
         nullable: true
       block_number:
@@ -764,172 +460,6 @@ tables:
         nullable: true
       value:
         data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axs_staking_pool_contract_logs_reward_claimed:
-    columns:
-      _user:
-        data_type: text
-        nullable: true
-      _token:
-        data_type: text
-        nullable: true
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axs_staking_pool_contract_logs_staked:
-    columns:
-      _user:
-        data_type: text
-        nullable: true
-      _token:
-        data_type: text
-        nullable: true
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  charm_contract_call_set_approval_for_all:
-    columns:
-      operator:
-        data_type: text
-        nullable: true
-      approved:
-        data_type: bool
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  charm_contract_logs_approval_for_all:
-    columns:
-      account:
-        data_type: text
-        nullable: true
-      operator:
-        data_type: text
-        nullable: true
-      approved:
-        data_type: bool
         nullable: true
       block_number:
         cluster: true
@@ -1075,6 +605,281 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
+  ronin_weth_contract_call_approve:
+    columns:
+      guy:
+        data_type: text
+        nullable: true
+      wad:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_weth_contract_logs_approval:
+    columns:
+      src:
+        data_type: text
+        nullable: true
+      guy:
+        data_type: text
+        nullable: true
+      wad:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_call_batch_grow_axieggs_to_adults:
+    columns:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_call_batch_grow_axieggs_to_adults__batch:
+    columns:
+      _axie_ids:
+        data_type: double
+        nullable: true
+      _seeds:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    parent: axie_contract_call_batch_grow_axieggs_to_adults
+  axie_contract_logs_axie_evolved:
+    columns:
+      _axie_id:
+        data_type: double
+        nullable: true
+      _genes__x:
+        data_type: text
+        nullable: true
+      _genes__y:
+        data_type: text
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  charm_contract_logs_transfer_single:
+    columns:
+      operator:
+        data_type: text
+        nullable: true
+      from:
+        data_type: text
+        nullable: true
+      to:
+        data_type: text
+        nullable: true
+      id:
+        data_type: double
+        nullable: true
+      value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_infinity_shard_contract_logs_approval:
+    columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _spender:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
   ronin_weth_contract_call_transfer:
     columns:
       dst:
@@ -1112,8 +917,189 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  smooth_love_potion_contract_call_transfer:
+  staking_manager_contract_logs_pool_synced:
     columns:
+      _pool:
+        data_type: text
+        nullable: true
+      _accumulated_per_share:
+        data_type: double
+        nullable: true
+      _last_synced_block:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  staking_manager_contract_logs_user_reward_updated:
+    columns:
+      _pool:
+        data_type: text
+        nullable: true
+      _user:
+        data_type: text
+        nullable: true
+      _reward_info__debited_rewards:
+        data_type: double
+        nullable: true
+      _reward_info__credited_rewards:
+        data_type: double
+        nullable: true
+      _reward_info__last_claimed_block:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axs_staking_pool_contract_logs_reward_claimed:
+    columns:
+      _user:
+        data_type: text
+        nullable: true
+      _token:
+        data_type: text
+        nullable: true
+      _amount:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axs_staking_pool_contract_logs_staked:
+    columns:
+      _user:
+        data_type: text
+        nullable: true
+      _token:
+        data_type: text
+        nullable: true
+      _amount:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  smooth_love_potion_contract_logs_transfer:
+    columns:
+      _from:
+        data_type: text
+        nullable: true
       _to:
         data_type: text
         nullable: true
@@ -1141,158 +1127,7 @@ tables:
       _tx_status:
         data_type: bigint
         nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  smooth_love_potion_contract_call_checkpoint:
-    columns:
-      _owner:
-        data_type: text
-        nullable: true
-      _amount:
-        data_type: double
-        nullable: true
-      _created_at:
-        data_type: double
-        nullable: true
-      _signature:
-        data_type: binary
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  smooth_love_potion_contract_logs_smooth_love_potion_checkpoint:
-    columns:
-      _owner:
-        data_type: text
-        nullable: true
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
       log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axs_staking_pool_contract_call_stake:
-    columns:
-      _amount:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  smooth_love_potion_contract_call_approve:
-    columns:
-      _spender:
-        data_type: text
-        nullable: true
-      _value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
         data_type: bigint
         nullable: true
       _dlt_load_id:
@@ -1313,86 +1148,6 @@ tables:
         nullable: true
       _value:
         data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  rune_contract_call_set_approval_for_all:
-    columns:
-      operator:
-        data_type: text
-        nullable: true
-      approved:
-        data_type: bool
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  rune_contract_logs_approval_for_all:
-    columns:
-      account:
-        data_type: text
-        nullable: true
-      operator:
-        data_type: text
-        nullable: true
-      approved:
-        data_type: bool
         nullable: true
       block_number:
         cluster: true
@@ -1453,327 +1208,6 @@ tables:
         data_type: text
         nullable: true
       _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  katana_router_contract_call_swap_exact_tokens_for_ron:
-    columns:
-      _amount_in:
-        data_type: double
-        nullable: true
-      _amount_out_min:
-        data_type: double
-        nullable: true
-      _to:
-        data_type: text
-        nullable: true
-      _deadline:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  katana_router_contract_call_swap_exact_tokens_for_ron___path:
-    columns:
-      value:
-        data_type: text
-        nullable: true
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-      _dlt_parent_id:
-        foreign_key: true
-        data_type: text
-        nullable: false
-      _dlt_list_idx:
-        data_type: bigint
-        nullable: false
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-    parent: katana_router_contract_call_swap_exact_tokens_for_ron
-  wrapped_ron_contract_logs_transfer:
-    columns:
-      from:
-        data_type: text
-        nullable: true
-      to:
-        data_type: text
-        nullable: true
-      value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  wrapped_ron_contract_logs_withdrawal:
-    columns:
-      sender:
-        data_type: text
-        nullable: true
-      value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  katana_router_contract_call_add_liquidity_ron:
-    columns:
-      _token:
-        data_type: text
-        nullable: true
-      _amount_token_desired:
-        data_type: double
-        nullable: true
-      _amount_token_min:
-        data_type: double
-        nullable: true
-      _amount_ron_min:
-        data_type: double
-        nullable: true
-      _to:
-        data_type: text
-        nullable: true
-      _deadline:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  wrapped_ron_contract_logs_deposit:
-    columns:
-      sender:
-        data_type: text
-        nullable: true
-      value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axie_infinity_shard_contract_call_approve:
-    columns:
-      _spender:
-        data_type: text
-        nullable: true
-      _value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  axie_infinity_shard_contract_logs_approval:
-    columns:
-      _owner:
-        data_type: text
-        nullable: true
-      _spender:
-        data_type: text
-        nullable: true
-      _value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
         data_type: bigint
         nullable: true
       _dlt_load_id:
@@ -1853,170 +1287,49 @@ tables:
         data_type: timestamp
         nullable: false
     parent: katana_router_contract_call_swap_tokens_for_exact_tokens
-  charm_contract_logs_transfer_single:
+  smooth_love_potion_contract_call_transfer:
+    columns:
+      _to:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  charm_contract_call_set_approval_for_all:
     columns:
       operator:
         data_type: text
         nullable: true
-      from:
-        data_type: text
-        nullable: true
-      to:
-        data_type: text
-        nullable: true
-      id:
-        data_type: double
-        nullable: true
-      value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  usd_coin_contract_logs_transfer:
-    columns:
-      from:
-        data_type: text
-        nullable: true
-      to:
-        data_type: text
-        nullable: true
-      value:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  katana_router_contract_call_swap_exact_ron_for_tokens:
-    columns:
-      _amount_out_min:
-        data_type: double
-        nullable: true
-      _to:
-        data_type: text
-        nullable: true
-      _deadline:
-        data_type: double
-        nullable: true
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-      transaction_hash:
-        data_type: text
-        nullable: true
-      transaction_index:
-        data_type: bigint
-        nullable: true
-      _tx_address:
-        data_type: text
-        nullable: true
-      _tx_status:
-        data_type: bigint
-        nullable: true
-      _dlt_load_id:
-        data_type: text
-        nullable: false
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-    write_disposition: append
-  katana_router_contract_call_swap_exact_ron_for_tokens___path:
-    columns:
-      value:
-        data_type: text
-        nullable: true
-      _dlt_id:
-        unique: true
-        data_type: text
-        nullable: false
-      _dlt_parent_id:
-        foreign_key: true
-        data_type: text
-        nullable: false
-      _dlt_list_idx:
-        data_type: bigint
-        nullable: false
-      block_number:
-        cluster: true
-        data_type: bigint
-        nullable: false
-      block_timestamp:
-        partition: true
-        sort: true
-        data_type: timestamp
-        nullable: false
-    parent: katana_router_contract_call_swap_exact_ron_for_tokens
-  axie_contract_call_set_approval_for_all:
-    columns:
-      _operator:
-        data_type: text
-        nullable: true
-      _approved:
+      approved:
         data_type: bool
         nullable: true
       block_number:
@@ -2048,15 +1361,15 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  axie_contract_logs_permission_set_all:
+  charm_contract_logs_approval_for_all:
     columns:
-      _owner:
+      account:
         data_type: text
         nullable: true
-      _operator:
+      operator:
         data_type: text
         nullable: true
-      _approved:
+      approved:
         data_type: bool
         nullable: true
       block_number:
@@ -2091,16 +1404,10 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  axie_contract_logs_approval_for_all:
+  axs_staking_pool_contract_call_stake:
     columns:
-      _owner:
-        data_type: text
-        nullable: true
-      _operator:
-        data_type: text
-        nullable: true
-      _approved:
-        data_type: bool
+      _amount:
+        data_type: double
         nullable: true
       block_number:
         cluster: true
@@ -2121,9 +1428,6 @@ tables:
         data_type: text
         nullable: true
       _tx_status:
-        data_type: bigint
-        nullable: true
-      log_index:
         data_type: bigint
         nullable: true
       _dlt_load_id:
@@ -2306,8 +1610,20 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  axie_contract_call_batch_grow_axieggs_to_adults:
+  smooth_love_potion_contract_call_checkpoint:
     columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _amount:
+        data_type: double
+        nullable: true
+      _created_at:
+        data_type: double
+        nullable: true
+      _signature:
+        data_type: binary
+        nullable: true
       block_number:
         cluster: true
         data_type: bigint
@@ -2337,12 +1653,12 @@ tables:
         data_type: text
         nullable: false
     write_disposition: append
-  axie_contract_call_batch_grow_axieggs_to_adults__batch:
+  smooth_love_potion_contract_logs_smooth_love_potion_checkpoint:
     columns:
-      _axie_ids:
-        data_type: double
+      _owner:
+        data_type: text
         nullable: true
-      _seeds:
+      _amount:
         data_type: double
         nullable: true
       block_number:
@@ -2354,6 +1670,78 @@ tables:
         sort: true
         data_type: timestamp
         nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_exact_ron_for_tokens:
+    columns:
+      _amount_out_min:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_exact_ron_for_tokens___path:
+    columns:
+      value:
+        data_type: text
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
       _dlt_parent_id:
         foreign_key: true
         data_type: text
@@ -2361,21 +1749,392 @@ tables:
       _dlt_list_idx:
         data_type: bigint
         nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: katana_router_contract_call_swap_exact_ron_for_tokens
+  wrapped_ron_contract_logs_deposit:
+    columns:
+      sender:
+        data_type: text
+        nullable: true
+      value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
       _dlt_id:
         unique: true
         data_type: text
         nullable: false
-    parent: axie_contract_call_batch_grow_axieggs_to_adults
-  axie_contract_logs_axie_evolved:
+    write_disposition: append
+  wrapped_ron_contract_logs_transfer:
     columns:
-      _axie_id:
+      from:
+        data_type: text
+        nullable: true
+      to:
+        data_type: text
+        nullable: true
+      value:
         data_type: double
         nullable: true
-      _genes__x:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
         data_type: text
         nullable: true
-      _genes__y:
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
         data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  rune_contract_call_set_approval_for_all:
+    columns:
+      operator:
+        data_type: text
+        nullable: true
+      approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  rune_contract_logs_approval_for_all:
+    columns:
+      account:
+        data_type: text
+        nullable: true
+      operator:
+        data_type: text
+        nullable: true
+      approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  smooth_love_potion_contract_call_approve:
+    columns:
+      _spender:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  usd_coin_contract_logs_transfer:
+    columns:
+      from:
+        data_type: text
+        nullable: true
+      to:
+        data_type: text
+        nullable: true
+      value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  usd_coin_contract_logs_approval:
+    columns:
+      owner:
+        data_type: text
+        nullable: true
+      spender:
+        data_type: text
+        nullable: true
+      value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_call_set_approval_for_all:
+    columns:
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_logs_permission_set_all:
+    columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_logs_approval_for_all:
+    columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
         nullable: true
       block_number:
         cluster: true
@@ -2433,6 +2192,1629 @@ tables:
         data_type: text
         nullable: true
       _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_try_bulk_deposit_for:
+    columns:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_try_bulk_deposit_for__batch:
+    columns:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    parent: ronin_gateway_contract_v2_call_try_bulk_deposit_for
+  ronin_gateway_contract_v2_call_try_bulk_deposit_for__batch___receipts:
+    columns:
+      value:
+        data_type: bigint
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: ronin_gateway_contract_v2_call_try_bulk_deposit_for__batch
+  ronin_gateway_contract_v2_call_try_bulk_deposit_for__batch___receipts__list:
+    columns:
+      value:
+        data_type: text
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: ronin_gateway_contract_v2_call_try_bulk_deposit_for__batch
+  ronin_gateway_contract_v2_logs_deposited:
+    columns:
+      receipt_hash:
+        data_type: binary
+        nullable: true
+      receipt__id:
+        data_type: double
+        nullable: true
+      receipt__kind:
+        data_type: bigint
+        nullable: true
+      receipt__mainchain__addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__token_addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__chain_id:
+        data_type: double
+        nullable: true
+      receipt__ronin__addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__token_addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__chain_id:
+        data_type: double
+        nullable: true
+      receipt__info__erc:
+        data_type: bigint
+        nullable: true
+      receipt__info__id:
+        data_type: double
+        nullable: true
+      receipt__info__quantity:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_infinity_shard_contract_call_approve:
+    columns:
+      _spender:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_exact_tokens_for_ron:
+    columns:
+      _amount_in:
+        data_type: double
+        nullable: true
+      _amount_out_min:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_exact_tokens_for_ron___path:
+    columns:
+      value:
+        data_type: text
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: katana_router_contract_call_swap_exact_tokens_for_ron
+  wrapped_ron_contract_logs_withdrawal:
+    columns:
+      sender:
+        data_type: text
+        nullable: true
+      value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  charm_contract_call_safe_transfer_from:
+    columns:
+      from:
+        data_type: text
+        nullable: true
+      to:
+        data_type: text
+        nullable: true
+      id:
+        data_type: double
+        nullable: true
+      amount:
+        data_type: double
+        nullable: true
+      data:
+        data_type: text
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axs_staking_pool_contract_call_unstake:
+    columns:
+      _amount:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axs_staking_pool_contract_logs_unstaked:
+    columns:
+      _user:
+        data_type: text
+        nullable: true
+      _token:
+        data_type: text
+        nullable: true
+      _amount:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_request_withdrawal_for:
+    columns:
+      _request__recipient_addr:
+        data_type: text
+        nullable: true
+      _request__token_addr:
+        data_type: text
+        nullable: true
+      _request__info__erc:
+        data_type: bigint
+        nullable: true
+      _request__info__id:
+        data_type: double
+        nullable: true
+      _request__info__quantity:
+        data_type: double
+        nullable: true
+      _chain_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_logs_withdrawal_requested:
+    columns:
+      receipt_hash:
+        data_type: binary
+        nullable: true
+      param_1__id:
+        data_type: double
+        nullable: true
+      param_1__kind:
+        data_type: bigint
+        nullable: true
+      param_1__mainchain__addr:
+        data_type: text
+        nullable: true
+      param_1__mainchain__token_addr:
+        data_type: text
+        nullable: true
+      param_1__mainchain__chain_id:
+        data_type: double
+        nullable: true
+      param_1__ronin__addr:
+        data_type: text
+        nullable: true
+      param_1__ronin__token_addr:
+        data_type: text
+        nullable: true
+      param_1__ronin__chain_id:
+        data_type: double
+        nullable: true
+      param_1__info__erc:
+        data_type: bigint
+        nullable: true
+      param_1__info__id:
+        data_type: double
+        nullable: true
+      param_1__info__quantity:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_bulk_submit_withdrawal_signatures:
+    columns:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_bulk_submit_withdrawal_signatures__batch:
+    columns:
+      _withdrawals:
+        data_type: double
+        nullable: true
+      _signatures:
+        data_type: binary
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    parent: ronin_gateway_contract_v2_call_bulk_submit_withdrawal_signatures
+  usd_coin_contract_call_approve:
+    columns:
+      _spender:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  usd_coin_contract_call_transfer:
+    columns:
+      _to:
+        data_type: text
+        nullable: true
+      _value:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_ron_for_exact_tokens:
+    columns:
+      _amount_out:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_ron_for_exact_tokens___path:
+    columns:
+      value:
+        data_type: text
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: katana_router_contract_call_swap_ron_for_exact_tokens
+  katana_router_contract_call_swap_tokens_for_exact_ron:
+    columns:
+      _amount_out:
+        data_type: double
+        nullable: true
+      _amount_in_max:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_swap_tokens_for_exact_ron___path:
+    columns:
+      value:
+        data_type: text
+        nullable: true
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+    parent: katana_router_contract_call_swap_tokens_for_exact_ron
+  katana_router_contract_call_add_liquidity_ron:
+    columns:
+      _token:
+        data_type: text
+        nullable: true
+      _amount_token_desired:
+        data_type: double
+        nullable: true
+      _amount_token_min:
+        data_type: double
+        nullable: true
+      _amount_ron_min:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_remove_liquidity:
+    columns:
+      _token_a:
+        data_type: text
+        nullable: true
+      _token_b:
+        data_type: text
+        nullable: true
+      _liquidity:
+        data_type: double
+        nullable: true
+      _amount_a_min:
+        data_type: double
+        nullable: true
+      _amount_b_min:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  katana_router_contract_call_remove_liquidity_ron:
+    columns:
+      _token:
+        data_type: text
+        nullable: true
+      _liquidity:
+        data_type: double
+        nullable: true
+      _amount_token_min:
+        data_type: double
+        nullable: true
+      _amount_ron_min:
+        data_type: double
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _deadline:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_try_bulk_acknowledge_mainchain_withdrew:
+    columns:
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_try_bulk_acknowledge_mainchain_withdrew__batch:
+    columns:
+      _withdrawal_ids:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      _dlt_parent_id:
+        foreign_key: true
+        data_type: text
+        nullable: false
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    parent: ronin_gateway_contract_v2_call_try_bulk_acknowledge_mainchain_withdrew
+  ronin_gateway_contract_v2_logs_mainchain_withdrew:
+    columns:
+      receipt_hash:
+        data_type: binary
+        nullable: true
+      receipt__id:
+        data_type: double
+        nullable: true
+      receipt__kind:
+        data_type: bigint
+        nullable: true
+      receipt__mainchain__addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__token_addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__chain_id:
+        data_type: double
+        nullable: true
+      receipt__ronin__addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__token_addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__chain_id:
+        data_type: double
+        nullable: true
+      receipt__info__erc:
+        data_type: bigint
+        nullable: true
+      receipt__info__id:
+        data_type: double
+        nullable: true
+      receipt__info__quantity:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_item_contract_logs_transfer:
+    columns:
+      _from:
+        data_type: text
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _token_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_call_request_withdrawal_signatures:
+    columns:
+      _withdrawal_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  ronin_gateway_contract_v2_logs_withdrawal_signatures_requested:
+    columns:
+      receipt_hash:
+        data_type: binary
+        nullable: true
+      receipt__id:
+        data_type: double
+        nullable: true
+      receipt__kind:
+        data_type: bigint
+        nullable: true
+      receipt__mainchain__addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__token_addr:
+        data_type: text
+        nullable: true
+      receipt__mainchain__chain_id:
+        data_type: double
+        nullable: true
+      receipt__ronin__addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__token_addr:
+        data_type: text
+        nullable: true
+      receipt__ronin__chain_id:
+        data_type: double
+        nullable: true
+      receipt__info__erc:
+        data_type: bigint
+        nullable: true
+      receipt__info__id:
+        data_type: double
+        nullable: true
+      receipt__info__quantity:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  rune_contract_call_safe_transfer_from:
+    columns:
+      from:
+        data_type: text
+        nullable: true
+      to:
+        data_type: text
+        nullable: true
+      id:
+        data_type: double
+        nullable: true
+      amount:
+        data_type: double
+        nullable: true
+      data:
+        data_type: text
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_contract_logs_transfer:
+    columns:
+      _from:
+        data_type: text
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _token_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  axie_contract_call_approve:
+    columns:
+      _approved:
+        data_type: text
+        nullable: true
+      _token_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_contract_call_set_approval_for_all:
+    columns:
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_contract_logs_approval_for_all:
+    columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_item_contract_call_set_approval_for_all:
+    columns:
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_item_contract_logs_approval_for_all:
+    columns:
+      _owner:
+        data_type: text
+        nullable: true
+      _operator:
+        data_type: text
+        nullable: true
+      _approved:
+        data_type: bool
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      log_index:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_item_contract_call_safe_transfer_from:
+    columns:
+      _from:
+        data_type: text
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _token_id:
+        data_type: double
+        nullable: true
+      block_number:
+        cluster: true
+        data_type: bigint
+        nullable: false
+      block_timestamp:
+        partition: true
+        sort: true
+        data_type: timestamp
+        nullable: false
+      transaction_hash:
+        data_type: text
+        nullable: true
+      transaction_index:
+        data_type: bigint
+        nullable: true
+      _tx_address:
+        data_type: text
+        nullable: true
+      _tx_status:
+        data_type: bigint
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        unique: true
+        data_type: text
+        nullable: false
+    write_disposition: append
+  land_contract_call_safe_transfer_from:
+    columns:
+      _from:
+        data_type: text
+        nullable: true
+      _to:
+        data_type: text
+        nullable: true
+      _token_id:
         data_type: double
         nullable: true
       block_number:
