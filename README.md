@@ -1,6 +1,14 @@
 # Axie Infinity On-Chain Data Scraper
 This project uses DLT to get block data from Ronin Network where the Axie activity takes place and decodes transactions and logs of several Axie smart contracts for easier reporting. The data is taken using Ethereum source extractor (which is, temporarily, a part of this project) that is general purpose and can be used for any other network and smart contract group.
 
+## Archived!
+This pipeline is made with very old dlt version and will not probably work with the newest. Nevertheless it demonstrates that:
+1. 256bit integers and decimals may be processed by dlt without losing precision
+2. a huge amounts of data can be proecessed (Axie producing blocks every five seconds)
+3. tables may be dynamically created to match smart contract signatures
+4. extract, normalize and load can be run in parallel
+5. on kubernetes, deployed with helm :)
+
 ## Axie Pipeline
 There are two Python scripts that implement the pipeline:
 1. `axies.py` is responsible for getting block data from Ethereum extractor and normalizing it.
